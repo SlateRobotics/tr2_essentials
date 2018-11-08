@@ -1,0 +1,91 @@
+tr2:
+  controller:
+    state:
+      type: joint_state_controller/JointStateController
+      publish_rate: 50
+    trajectory:
+      ArmPosition:
+        type: effort_controllers/JointTrajectoryController
+        joints:
+          - JointArm0
+          - JointArm1
+          - JointArm2
+          - JointArm3
+          - JointArm4
+        gains:
+          JointArm0: {p: 6.0, i: 0.0, d: 0.0, i_clamp: 1.0}
+          JointArm1: {p: 15.0, i: 0.1, d: 1.0, i_clamp: 1.0}
+          JointArm2: {p: 10.0, i: 0.1, d: 1.0, i_clamp: 1.0}
+          JointArm3: {p: 10.0, i: 0.1, d: 1.0, i_clamp: 1.0}
+          JointArm4: {p: 0.8, i: 0.2, d: 0.0, i_clamp: 1.0}
+        constraints:
+          goal_time: 10.0
+          JointArm0:
+            goal: 0.1
+          JointArm1:
+            goal: 0.1
+          JointArm2:
+            goal: 0.1
+          JointArm3:
+            goal: 0.1
+          JointArm4:
+            goal: 0.1
+    position:
+      JointArm0:
+        type: effort_controllers/JointPositionController
+        joint: JointArm0
+        pid: {p: 3.0, i: 0.3, d: 0.0, i_clamp: 1.0}
+      JointArm1:
+        type: effort_controllers/JointPositionController
+        joint: JointArm1
+        pid: {p: 15.0, i: 0.0, d: 1.0, i_clamp: 0.0}
+      JointArm2:
+        type: effort_controllers/JointPositionController
+        joint: JointArm2
+        pid: {p: 15.0, i: 0.0, d: 1.0, i_clamp: 0.0}
+      JointArm3:
+        type: effort_controllers/JointPositionController
+        joint: JointArm3
+        pid: {p: 15.0, i: 0.0, d: 1.0, i_clamp: 0.0}
+      JointArm4:
+        type: effort_controllers/JointPositionController
+        joint: JointArm4
+        pid: {p: 0.8, i: 0.2, d: 0.0, i_clamp: 1.0}
+      JointHeadTilt:
+        type: effort_controllers/JointPositionController
+        joint: JointHeadTilt
+        pid: {p: 3.0, i: 0.3, d: 0.0, i_clamp: 1.0}
+      JointHeadPan:
+        type: effort_controllers/JointPositionController
+        joint: JointHeadPan
+        pid: {p: 3.0, i: 0.3, d: 0.0, i_clamp: 1.0}
+    effort:
+      JointBaseWheelL:
+        type: effort_controllers/JointEffortController
+        joint: JointBaseWheelL
+      JointBaseWheelR:
+        type: effort_controllers/JointEffortController
+        joint: JointBaseWheelR
+      JointArm0:
+        type: effort_controllers/JointEffortController
+        joint: JointArm0
+      JointArm1:
+        type: effort_controllers/JointEffortController
+        joint: JointArm1
+      JointArm2:
+        type: effort_controllers/JointEffortController
+        joint: JointArm2
+      JointArm3:
+        type: effort_controllers/JointEffortController
+        joint: JointArm3
+      JointArm4:
+        type: effort_controllers/JointEffortController
+        joint: JointArm4
+      JointHeadTilt:
+        type: effort_controllers/JointEffortController
+        joint: JointHeadTilt
+        pid: {p: 5.0, i: 0.0, d: 1.0}
+      JointHeadPan:
+        type: effort_controllers/JointEffortController
+        joint: JointHeadPan
+        pid: {p: 5.0, i: 0.0, d: 1.0}

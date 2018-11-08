@@ -1,0 +1,37 @@
+<launch>
+	<!-- ARGS -->
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+  <arg name="robot_name" default="tr2"/>
+
+	<!-- PARAMS + ROSPARAMS -->
+  <rosparam file="$(find tr2_hardware_interface)/config/hardware.yaml" command="load"/>
+  <rosparam file="$(find tr2_hardware_interface)/config/controllers.yaml" command="load"/>
+  <rosparam file="$(find tr2_hardware_interface)/config/joint_limits.yaml" command="load"/>
+  <rosparam file="$(find tr2_hardware_interface)/config/joint_offsets.yaml" command="load"/>
+
+	<param name="robot_description" command="xacro --inorder $(find tr2_description)/robots/tr2.urdf.xacro" />
+
+	<!-- INCLUDES -->
+
+
+	<!-- NODES -->
+  <node name="tr2_hardware_interface" pkg="tr2_hardware_interface" type="tr2_hardware_interface_node" output="screen" launch-prefix="$(arg launch_prefix)"/>
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
+		args="
+			/tr2/controller/state
+			/tr2/controller/position/JointHeadPan
+			/tr2/controller/position/JointHeadTilt
+			/tr2/controller/position/JointRightShoulderPan
+			/tr2/controller/position/JointRightShoulderTilt
+			/tr2/controller/position/JointRightUpperArmRoll
+			/tr2/controller/position/JointRightElbowFlex
+			/tr2/controller/position/JointRightForearmRoll
+			/tr2/controller/position/JointRightWristFlex
+			/tr2/controller/position/JointRightWristRoll
+			/tr2/controller/effort/JointRightGripper
+		"/>
+
+</launch>
