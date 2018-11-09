@@ -2,7 +2,7 @@
 #define TR2CPP__JOINT_H
 
 #include <sstream>
-#include <tr2cpp/i2c.h>
+#include <tr2cpp/serial.h>
 
 #define ARM0_SLAVE_ADDRESS 0x10
 #define ARM1_SLAVE_ADDRESS 0x11
@@ -33,6 +33,7 @@ namespace tr2cpp
 			double _previousAngles[_filterPrevious];
 			void _prepareI2CWrite(uint8_t result[4], double effort);
 			void _prepareI2CRead(uint8_t result[4]);
+			SerialPort *_serialPort;
 		public:
 			std::string name;
 			Joint();
