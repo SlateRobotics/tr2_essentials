@@ -1,6 +1,6 @@
 tr2:
   hardware_interface:
-     loop_hz: 10 # hz
+     loop_hz: 2 # hz
      joints:
        - JointArm0
        - JointArm1

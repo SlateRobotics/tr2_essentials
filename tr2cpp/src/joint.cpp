@@ -98,42 +98,84 @@ namespace tr2cpp
 		}
 	}
 
-	void Joint::actuate(double effort, uint8_t duration = 15)
+	void Joint::setPosition(double pos)
 	{
-		if (_actuatorType == ACTUATOR_TYPE_MOTOR)
-		{
-			if (effort > 1.0) effort = 1.0;
-			if (effort < -1.0) effort = -1.0;
-			if (abs(effort * 100.0) < 20) return; // because it's too little to do anything
+		uint8_t packetSize = 5;
+		uint8_t packet[packetSize];
+		packet[0] = 255;
+		packet[1] = packetSize;
+		packet[2] = CMD_SET_POS;
+		packet[3] = mode;
+		packet[3] = mode;
+		
+		long checksum = 0;
+		for (int i = 0; i < packetSize - 1; i++) {
+			checksum += packet[i];
+		}
+		packet[4] = checksum % 256;
 
-			uint8_t data[4];
-			data[3] = duration;
-			if (_serialPort->isConnected()) {
-				if (effort > 1.0) effort = 1.0;
-				if (effort < -1.0) effort = -1.0;
-				uint8_t speed = floor(abs(effort * 100));
-				uint8_t direction = (effort > 0);
+		char data[255];
+		snprintf(data, 255, "0x%x %i %i %i %i %i ;", _getSlaveAddress(), packet[0], packet[1], packet[2], packet[3], packet[4]);
+		bool success = _serialPort->writeSerialPort(data);
+		if (!success) {
+			ROS_WARN("Could not write to serial port");
+		}
+	}
 
-				char data[255];
-				snprintf(data, 255, "0x%x %i %i %i %i ;", _getSlaveAddress(), _motorId, speed, direction, duration);
-				bool success = _serialPort->writeSerialPort(data);
-				if (!success) {
-					ROS_WARN("Could not write to serial port");
-				}
-			} else {
-				ROS_WARN("Serial port is not connected");
+	void Joint::setMode(int mode)
+	{
+		if (_serialPort->isConnected()) {
+			uint8_t packetSize = 5;
+			uint8_t packet[packetSize];
+			packet[0] = 255;
+			packet[1] = packetSize;
+			packet[2] = CMD_SET_MODE;
+			packet[3] = mode;
+		
+			long checksum = 0;
+			for (int i = 0; i < packetSize - 1; i++) {
+				checksum += packet[i];
+			}
+			packet[4] = checksum % 256;
+
+			char data[255];
+			snprintf(data, 255, "0x%x %i %i %i %i %i ;", _getSlaveAddress(), packet[0], packet[1], packet[2], packet[3], packet[4]);
+			bool success = _serialPort->writeSerialPort(data);
+			if (!success) {
+				ROS_WARN("Could not write to serial port");
 			}
 		}
-		else if (_actuatorType == ACTUATOR_TYPE_SERVO)
-		{
-			if (effort != _previousEffort)
-			{
-				uint8_t data[4];
-				//_prepareI2CWrite(data, effort);
-				//I2C i2cSlave = I2C(1, _getSlaveAddress());
-				//uint8_t result = i2cSlave.writeData(0x00, data);
-				//ROS_INFO("Result: [%i]; effort: [%f]; bytes: %i, %i, %i, %i", result, effort, data[0], data[1], data[2], data[3]);
+	}
+
+	void Joint::actuate(double effort, uint8_t duration = 15)
+	{
+		if (effort > 1.0) effort = 1.0;
+		if (effort < -1.0) effort = -1.0;
+		if (abs(effort * 100.0) < 20) return; // because it's too little to do anything
+
+		if (_serialPort->isConnected()) {
+			int offsetBinary = 128;
+			uint8_t packetSize = 5;
+			uint8_t packet[packetSize];
+			packet[0] = 255;
+			packet[1] = packetSize;
+			packet[2] = CMD_ROTATE;
+			packet[3] = floor(effort * 100) + offsetBinary;
+			
+			long checksum = 0;
+			for (int i = 0; i < packetSize - 1; i++) {
+				checksum += packet[i];
 			}
+			packet[4] = checksum % 256;
+
+			char data[255];
+			snprintf(data, 255, "0x%x %i %i %i %i %i ;", _getSlaveAddress(), packet[0], packet[1], packet[2], packet[3], packet[4]);
+			bool success = _serialPort->writeSerialPort(data);
+			if (!success) {
+				ROS_WARN("Could not write to serial port");
+			}
+		} else {
+			ROS_WARN("Serial port is not connected");
 		}
 
 		_previousEffort = effort;
@@ -141,23 +183,16 @@ namespace tr2cpp
 
 	uint8_t Joint::_getSlaveAddress()
 	{
-		if (_motorId >= 0 && _motorId <= 5)
-		{
-			if (_motorId == 0) return ARM0_SLAVE_ADDRESS;
-			else if (_motorId == 1) return ARM1_SLAVE_ADDRESS;
-			else if (_motorId == 2) return ARM2_SLAVE_ADDRESS;
-			else if (_motorId == 3) return ARM3_SLAVE_ADDRESS;
-			else if (_motorId == 4) return ARM4_SLAVE_ADDRESS;
-			else if (_motorId == 5) return ARM0_SLAVE_ADDRESS;
-		}
-		else if (_motorId >= 0 && _motorId <= 7)
-		{
-			return BASE_SLAVE_ADDRESS;
-		}
-		else if (_motorId >= 0 && _motorId <= 9)
-		{
-			return HEAD_SLAVE_ADDRESS;
-		}
+		if (_motorId == 0) return ARM0_SLAVE_ADDRESS;
+		else if (_motorId == 1) return ARM1_SLAVE_ADDRESS;
+		else if (_motorId == 2) return ARM2_SLAVE_ADDRESS;
+		else if (_motorId == 3) return ARM3_SLAVE_ADDRESS;
+		else if (_motorId == 4) return ARM4_SLAVE_ADDRESS;
+		else if (_motorId == 5) return GRIPPER_SLAVE_ADDRESS;
+		else if (_motorId == 6) return BASE_SLAVE_ADDRESS;
+		else if (_motorId == 7) return BASE_SLAVE_ADDRESS;
+		else if (_motorId == 8) return HEAD0_SLAVE_ADDRESS;
+		else if (_motorId == 9) return HEAD1_SLAVE_ADDRESS;
 		else
 		{
 			ROS_ERROR("Invalid MotorID: %i", _motorId);

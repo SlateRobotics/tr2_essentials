@@ -9,12 +9,25 @@
 #define ARM2_SLAVE_ADDRESS 0x12
 #define ARM3_SLAVE_ADDRESS 0x13
 #define ARM4_SLAVE_ADDRESS 0x14
+#define GRIPPER_SLAVE_ADDRESS 0x30
 #define BASE_SLAVE_ADDRESS 0x70
-#define HEAD_SLAVE_ADDRESS 0x73
+#define HEAD0_SLAVE_ADDRESS 0x20
+#define HEAD1_SLAVE_ADDRESS 0x21
 
 #define ACTUATOR_TYPE_NONE -1
 #define ACTUATOR_TYPE_MOTOR 0
 #define ACTUATOR_TYPE_SERVO 1
+
+#define CMD_SET_MODE 0x10
+#define CMD_SET_POS 0x11
+#define CMD_RESET_POS 0x12
+#define CMD_ROTATE 0x13
+#define CMD_RETURN_STATUS 0x14
+#define CMD_SET_FREQUENCY 0x15
+
+#define MODE_SERVO 0x10
+#define MODE_BACKDRIVE 0x11
+#define MODE_ROTATE 0x12
 
 namespace tr2cpp
 {
@@ -39,7 +52,7 @@ namespace tr2cpp
 			Joint();
 			Joint(uint8_t motorId);
 			~Joint();
-			double sensorResolution = 1024;
+			double sensorResolution = 102;
 			double angleOffset = 0;
 			double readRatio = 1;
 			uint8_t getMotorId();
@@ -48,7 +61,9 @@ namespace tr2cpp
 			void setServoLimits(uint8_t minValue, uint8_t maxValue);
 			int getActuatorType();
 			double getPreviousEffort();
+			void setMode(int mode);
 			void actuate(double effort, uint8_t duration);
+			void setPosition(double pos);
 			double readAngle();
 	};
 }
