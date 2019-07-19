@@ -61,10 +61,6 @@ namespace tr2_hardware_interface
 
 		  ROS_DEBUG_STREAM_NAMED("constructor","Loading joint name: " << joint.name);
 
-			nh_.getParam("/tr2/joint_offsets/" + joint.name, joint.angleOffset);
-			nh_.getParam("/tr2/joint_read_ratio/" + joint.name, joint.readRatio);
-			tr2.setJoint(joint);
-
 		  // Create joint state interface
 			JointStateHandle jointStateHandle(joint.name, &joint_position_[i], &joint_velocity_[i], &joint_effort_[i]);
 		  joint_state_interface_.registerHandle(jointStateHandle);
@@ -109,6 +105,8 @@ namespace tr2_hardware_interface
 			_logInfo += "  " + joint_names_[i] + ": " + jointPositionStr.str() + "\n";
 		}
 
+		tr2.step();
+
 		elapsed_time_ = ros::Duration(e.current_real - e.last_real);
 
 		read();
@@ -125,15 +123,11 @@ namespace tr2_hardware_interface
 		{
 			tr2cpp::Joint joint = tr2.getJoint(joint_names_[i]);
 
-			if (joint.getActuatorType() == ACTUATOR_TYPE_MOTOR)
-			{
-				joint_position_[i] = joint.readAngle();
+			joint_position_[i] = joint.getPosition();
 
-				std::ostringstream jointPositionStr;
-				jointPositionStr << joint_position_[i];
-				_logInfo += "  " + joint.name + ": " + jointPositionStr.str() + "\n";
-			}
-
+			std::ostringstream jointPositionStr;
+			jointPositionStr << joint_position_[i];
+			_logInfo += "  " + joint.name + ": " + jointPositionStr.str() + "\n";
 			tr2.setJoint(joint);
 		}
 	}
@@ -146,17 +140,8 @@ namespace tr2_hardware_interface
 		for (int i = 0; i < num_joints_; i++)
 		{
 			tr2cpp::Joint joint = tr2.getJoint(joint_names_[i]);
-			//if (joint_effort_command_[i] > 1) joint_effort_command_[i] = 1;
-			//if (joint_effort_command_[i] < -1) joint_effort_command_[i] = -1;
-
 			double effort = joint_effort_command_[i];
 			uint8_t duration = 15;
-
-			if (joint.getActuatorType() == 1) { // servo
-				double previousEffort = joint.getPreviousEffort();
-				effort += previousEffort;
-			}
-			
 			joint.actuate(effort, duration);
 
 			std::ostringstream jointEffortStr;

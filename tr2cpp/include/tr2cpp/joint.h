@@ -2,69 +2,23 @@
 #define TR2CPP__JOINT_H
 
 #include <sstream>
-#include <tr2cpp/serial.h>
-
-#define ARM0_SLAVE_ADDRESS 0x10
-#define ARM1_SLAVE_ADDRESS 0x11
-#define ARM2_SLAVE_ADDRESS 0x12
-#define ARM3_SLAVE_ADDRESS 0x13
-#define ARM4_SLAVE_ADDRESS 0x14
-#define GRIPPER_SLAVE_ADDRESS 0x30
-#define BASE_SLAVE_ADDRESS 0x70
-#define HEAD0_SLAVE_ADDRESS 0x20
-#define HEAD1_SLAVE_ADDRESS 0x21
-
-#define ACTUATOR_TYPE_NONE -1
-#define ACTUATOR_TYPE_MOTOR 0
-#define ACTUATOR_TYPE_SERVO 1
-
-#define CMD_SET_MODE 0x10
-#define CMD_SET_POS 0x11
-#define CMD_RESET_POS 0x12
-#define CMD_ROTATE 0x13
-#define CMD_RETURN_STATUS 0x14
-#define CMD_SET_FREQUENCY 0x15
-
-#define MODE_SERVO 0x10
-#define MODE_BACKDRIVE 0x11
-#define MODE_ROTATE 0x12
+#include <tr2cpp/msgs.h>
 
 namespace tr2cpp
 {
 	class Joint
 	{
 		private:
-			uint8_t _motorId = 0;
-			uint8_t _actuatorType = 0;
-			uint8_t _getSlaveAddress();
-			uint8_t _minServoValue = 0;
-			uint8_t _maxServoValue = 75;
 			double _previousEffort;
-			double _filterAngle(double angle);
-			int _angleReads = 0;
-			static const int _filterPrevious = 3;
-			double _previousAngles[_filterPrevious];
-			void _prepareI2CWrite(uint8_t result[4], double effort);
-			void _prepareI2CRead(uint8_t result[4]);
-			SerialPort *_serialPort;
 		public:
 			std::string name;
 			Joint();
-			Joint(uint8_t motorId);
 			~Joint();
-			double sensorResolution = 102;
-			double angleOffset = 0;
-			double readRatio = 1;
-			uint8_t getMotorId();
-			void setMotorId(uint8_t motorId);
-			void setActuatorType(uint8_t actuatorType);
-			void setServoLimits(uint8_t minValue, uint8_t maxValue);
-			int getActuatorType();
-			double getPreviousEffort();
 			void setMode(int mode);
 			void actuate(double effort, uint8_t duration);
 			void setPosition(double pos);
-			double readAngle();
+			double getPosition();
+			double getPreviousEffort();
 	};
 }
 

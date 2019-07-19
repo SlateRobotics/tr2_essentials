@@ -1,14 +1,13 @@
 tr2:
   hardware_interface:
-     loop_hz: 2 # hz
+     loop_hz: 5 # hz
      joints:
-       - JointArm0
-       - JointArm1
-       - JointArm2
-       - JointArm3
-       - JointArm4
-       - JointArmGripper
-       - JointBaseWheelL
-       - JointBaseWheelR
-       - JointHeadPan
-       - JointHeadTilt
+       - a0
+       - a1
+       - a2
+       - a3
+       - a4
+       - g0
+       - b0
+       - h0
+       - h1

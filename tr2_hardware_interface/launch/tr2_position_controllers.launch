@@ -8,8 +8,6 @@
 	<!-- PARAMS + ROSPARAMS -->
   <rosparam file="$(find tr2_hardware_interface)/config/hardware.yaml" command="load"/>
   <rosparam file="$(find tr2_hardware_interface)/config/controllers.yaml" command="load"/>
-  <rosparam file="$(find tr2_hardware_interface)/config/joint_limits.yaml" command="load"/>
-  <rosparam file="$(find tr2_hardware_interface)/config/joint_offsets.yaml" command="load"/>
 
 	<param name="robot_description" command="xacro --inorder $(find tr2_description)/robots/tr2.urdf.xacro" />
 
@@ -22,16 +20,15 @@
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
 		args="
 			/tr2/controller/state
-			/tr2/controller/position/JointHeadPan
-			/tr2/controller/position/JointHeadTilt
-			/tr2/controller/position/JointRightShoulderPan
-			/tr2/controller/position/JointRightShoulderTilt
-			/tr2/controller/position/JointRightUpperArmRoll
-			/tr2/controller/position/JointRightElbowFlex
-			/tr2/controller/position/JointRightForearmRoll
-			/tr2/controller/position/JointRightWristFlex
-			/tr2/controller/position/JointRightWristRoll
-			/tr2/controller/effort/JointRightGripper
+			/tr2/controller/effort/b0
+			/tr2/controller/position/a0
+			/tr2/controller/position/a1
+			/tr2/controller/position/a2
+			/tr2/controller/position/a3
+			/tr2/controller/position/a4
+			/tr2/controller/position/g0
+			/tr2/controller/position/h0
+			/tr2/controller/position/h1
 		"/>
 
 </launch>

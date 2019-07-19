@@ -27,15 +27,18 @@ install(DIRECTORY include/${PROJECT_NAME}/
   PATTERN ".svn" EXCLUDE)
 
 add_library(tr2cpp
-	include/${PROJECT_NAME}/i2c.h
-	include/${PROJECT_NAME}/serial.h
 	include/${PROJECT_NAME}/tr2.h
-	include/${PROJECT_NAME}/segment.h
 	include/${PROJECT_NAME}/joint.h
-	src/i2c.cpp
-	src/serial.cpp
+	include/${PROJECT_NAME}/msgs.h
+	include/${PROJECT_NAME}/Protocol.h
+	include/${PROJECT_NAME}/ProtocolSimple.h
+	include/${PROJECT_NAME}/Socket.h
+	include/${PROJECT_NAME}/Utility.h
+	include/${PROJECT_NAME}/Socket.tpp
 	src/tr2.cpp
-	src/arm.cpp
 	src/joint.cpp
+	src/Protocol.cpp
+	src/ProtocolSimple.cpp
+	src/Socket.cpp
 )
 target_link_libraries(tr2cpp ${catkin_LIBRARIES})

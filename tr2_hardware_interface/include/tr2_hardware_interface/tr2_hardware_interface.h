@@ -12,7 +12,6 @@
 #include <boost/scoped_ptr.hpp>
 #include <ros/ros.h>
 #include <tr2cpp/tr2.h>
-#include <tr2cpp/arm.h>
 #include <tr2cpp/joint.h>
 #include <tr2_hardware_interface/tr2_hardware.h>
 

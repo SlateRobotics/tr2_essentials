@@ -8,8 +8,6 @@
 	<!-- PARAMS + ROSPARAMS -->
   <rosparam file="$(find tr2_hardware_interface)/config/hardware.yaml" command="load"/>
   <rosparam file="$(find tr2_hardware_interface)/config/controllers.yaml" command="load"/>
-  <rosparam file="$(find tr2_hardware_interface)/config/joint_limits.yaml" command="load"/>
-  <rosparam file="$(find tr2_hardware_interface)/config/joint_offsets.yaml" command="load"/>
 
 	<param name="robot_description" command="xacro --inorder $(find tr2_description)/robots/tr2.urdf.xacro" />
 
@@ -22,16 +20,15 @@
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
 		args="
 			/tr2/controller/state
-			/tr2/controller/effort/JointArm0
-			/tr2/controller/effort/JointArm1
-			/tr2/controller/effort/JointArm2
-			/tr2/controller/effort/JointArm3
-			/tr2/controller/effort/JointArm4
-			/tr2/controller/effort/JointArmGripper
-			/tr2/controller/effort/JointBaseWheelR
-			/tr2/controller/effort/JointBaseWheelL
-			/tr2/controller/effort/JointHeadPan
-			/tr2/controller/effort/JointHeadTilt
+			/tr2/controller/effort/b0
+			/tr2/controller/effort/a0
+			/tr2/controller/effort/a1
+			/tr2/controller/effort/a2
+			/tr2/controller/effort/a3
+			/tr2/controller/effort/a4
+			/tr2/controller/effort/g0
+			/tr2/controller/effort/h0
+			/tr2/controller/effort/h1
 		"/>
 
 </launch>
