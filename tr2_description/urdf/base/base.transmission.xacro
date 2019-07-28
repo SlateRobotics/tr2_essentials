@@ -1,57 +1,24 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <transmission name="JointBaseWheelFR_trans">
+  <transmission name="b0l_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="motor19">
       <mechanicalReduction>1</mechanicalReduction>
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </actuator>
-    <joint name="JointBaseWheelFR">
+    <joint name="b0l">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
-  <transmission name="JointBaseWheelFL_trans">
+  <transmission name="b0r_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="motor20">
       <mechanicalReduction>1</mechanicalReduction>
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </actuator>
-    <joint name="JointBaseWheelFL">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-  </transmission>
-
-  <transmission name="JointBaseWheelBR_trans">
-    <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="motor21">
-      <mechanicalReduction>1</mechanicalReduction>
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </actuator>
-    <joint name="JointBaseWheelBR">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-  </transmission>
-
-  <transmission name="JointBaseWheelBL_trans">
-    <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="motor22">
-      <mechanicalReduction>1</mechanicalReduction>
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </actuator>
-    <joint name="JointBaseWheelBL">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-  </transmission>
-
-  <transmission name="JointTorsoExtension_trans">
-    <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="motor23">
-      <mechanicalReduction>1</mechanicalReduction>
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-    </actuator>
-    <joint name="JointTorsoExtension">
+    <joint name="b0r">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission>

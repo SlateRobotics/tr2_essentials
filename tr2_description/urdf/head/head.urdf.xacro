@@ -4,25 +4,6 @@
   <xacro:include filename="$(find tr2_description)/urdf/head/head.gazebo.xacro" />
 	<xacro:include filename="$(find tr2_description)/urdf/head/head.transmission.xacro" />
 
-	<link name="neck_base_link">
-		<collision>
-			<geometry>
-        <mesh filename="package://tr2_description/meshes/dae/neck_base.dae" scale="0.001 0.001 0.001"/>
-			</geometry>
-			<origin rpy="1.5708 0 0"/>
-		</collision>
-		<inertial>
-			<mass value="0.005"/>
-			<inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" ixz="0" iyz="0" />
-		</inertial>
-		<visual>
-			<geometry>
-        <mesh filename="package://tr2_description/meshes/dae/neck_base.dae" scale="0.001 0.001 0.001"/>
-			</geometry>
-			<origin rpy="1.5708 0 0"/>
-		</visual>
-	</link>
-
 	<link name="neck_link">
 		<collision>
 			<geometry>
@@ -81,16 +62,16 @@
 		<axis xyz="1 0 0" />
 	</joint>
 
-	<joint name="JointHeadPan" type="revolute">
-		<parent link="neck_base_link"/>
+	<joint name="h0" type="revolute">
+		<parent link="base_link"/>
 		<child link="neck_link"/>
-		<origin xyz="0 0 0.035"/>
+		<origin xyz="0 -0.017 0.850"/>
     <axis xyz="0 0 1"/>
 		<limit effort="1.0" lower="-1.5708" upper="1.5708" velocity="0.5"/>
     <dynamics damping="0.1" friction="0.1"/>
 	</joint>
 
-	<joint name="JointHeadTilt" type="revolute">
+	<joint name="h1" type="revolute">
 		<parent link="neck_link"/>
 		<child link="head_link"/>
 		<origin xyz="0 0.090789 0.09"/>

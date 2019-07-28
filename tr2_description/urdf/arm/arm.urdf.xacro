@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find tr2_description)/urdf/arm/arm.macros.xacro" />
+  <xacro:include filename="$(find tr2_description)/urdf/arm/arm.gazebo.xacro" />
+	<xacro:include filename="$(find tr2_description)/urdf/arm/arm.transmission.xacro" />
+
+	<xacro:arm_link name="arm1" origin_rpy="1.5708 0 0" />
+	<xacro:arm_link name="arm2" origin_rpy="1.5708 0 0" />
+	<xacro:arm_link name="arm3" origin_rpy="1.5708 0 0" />
+	<xacro:arm_link name="arm4" origin_rpy="1.5708 0 0" />
+	<xacro:arm_link name="arm5" origin_rpy="-1.5708 3.141592 0" />
+	<xacro:arm_link name="arm6" origin_rpy="-1.5708 0 0" />
+	
+	<joint name="base_to_a0" type="fixed">
+		<parent link="base_link"/>
+		<child link="arm1_link"/>
+		<origin rpy="0 0 1.570796" xyz="0.0 0.15 0.600"/>
+	</joint>
+
+	<joint name="a0" type="revolute">
+		<parent link="arm1_link"/>
+		<child link="arm2_link"/>
+		<origin xyz="0 0 -0.007"/>
+    <axis xyz="0 0 1"/>
+		<limit effort="1.0" lower="-1" upper="1.5708" velocity="0.2932"/>
+    <dynamics damping="0.1" friction="0.1"/>
+	</joint>
+
+	<joint name="a1" type="revolute">
+		<parent link="arm2_link"/>
+		<child link="arm3_link"/>
+		<origin xyz="0.139238 0 0"/>
+    <axis xyz="0 1 0"/>
+		<limit effort="1.0" lower="-1.5708" upper="1.5708" velocity="0.075"/>
+    <dynamics damping="0.1" friction="0.1"/>
+	</joint>
+
+	<joint name="a2" type="revolute">
+		<parent link="arm3_link"/>
+		<child link="arm4_link"/>
+		<origin xyz="0.238827 0 0"/>
+    <axis xyz="1 0 0"/>
+		<limit effort="1.0" lower="-3.1415" upper="3.1415" velocity="0.25"/>
+    <dynamics damping="0.1" friction="0.1"/>
+	</joint>
+
+	<joint name="a3" type="revolute">
+		<parent link="arm4_link"/>
+		<child link="arm5_link"/>
+		<origin xyz="0.145 0 0"/>
+    <axis xyz="0 1 0"/>
+		<limit effort="1.0" lower="-1.75" upper="1.75" velocity="0.1"/>
+    <dynamics damping="0.1" friction="0.1"/>
+	</joint>
+
+	<joint name="a4" type="revolute">
+		<parent link="arm5_link"/>
+		<child link="arm6_link"/>
+		<origin xyz="0.230643 0 0"/>
+    <axis xyz="1 0 0"/>
+		<limit effort="1.0" lower="-3.1415" upper="3.1415" velocity="1.4661"/>
+    <dynamics damping="0.1" friction="0.1"/>
+	</joint>
+
+	<!--<joint name="g0" type="revolute">
+		<parent link="gripper1_link"/>
+		<child link="gripper2_link"/>
+		<origin rpy="0 0 -1.5708" xyz="0.024 -0.014 0"/>
+    <axis xyz="0 0 1"/>
+		<limit effort="1.0" lower="0" upper="1.5708" velocity="0.5"/>
+    <dynamics damping="0.1" friction="0.1"/>
+	</joint>-->
+
+</robot>
+
+

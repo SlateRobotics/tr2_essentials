@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <transmission name="HeadTilt_trans">
+  <transmission name="h0_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="JointHeadTilt_actuator">
+    <actuator name="h0_actuator">
       <mechanicalReduction>378</mechanicalReduction>
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </actuator>
-    <joint name="JointHeadTilt">
+    <joint name="h0">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
-  <transmission name="HeadPan_trans">
+  <transmission name="h1_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="JointHeadPan_actuator">
+    <actuator name="h1_actuator">
       <mechanicalReduction>378</mechanicalReduction>
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </actuator>
-    <joint name="JointHeadPan">
+    <joint name="h1">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission>
