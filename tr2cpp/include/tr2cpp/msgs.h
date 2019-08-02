@@ -12,9 +12,11 @@
 #define MODE_BACKDRIVE 0x11
 #define MODE_ROTATE 0x12
 
+#include <tr2cpp/packet.h>
 #include "Socket.h"
 #include "ProtocolSimple.h"
 #include <iostream>
+#include <chrono>
 
 namespace Sock = ThorsAnvil::Socket;
 
@@ -23,37 +25,53 @@ namespace tr2cpp
 	class Msgs
 	{
 		private:
+			int _msgId = 0;
+
+			std::string req;
+			std::string state;
+			Sock::ServerSocket server = Sock::ServerSocket(12345);
+
+			int incrementMsgId ()
+			{
+				if (_msgId < 255)
+				{
+					_msgId++;
+				} else {
+					_msgId = 0;
+				}
+				return _msgId;
+			}
 
 		public:
-			Msgs()
-			{
-				std::cout << "Starting server...\n";				
+			Msgs() { }
+			~Msgs() { }
 
-				Sock::ServerSocket server(12345);
-				int finished = 0;
-				while(!finished)
-				{
+			std::string getState()
+			{
+				return state;
+			}
+
+			void step()
+			{
 					Sock::DataSocket accept = server.accept();
 					Sock::ProtocolSimple acceptSimple(accept);
 
-					acceptSimple.sendMessage("", "nc;");
+					// send commands
+					acceptSimple.sendMessage("", req);
+					req = "nc;";
 
-					std::string message;
-					message.reserve(256);
-					acceptSimple.recvMessage(message);
-
-					message = message.substr(0, message.find(";;")) + ";";
-
-					std::cout << " > " << message << "\n";
-				}
-
+					// recieve states
+					std::string res;
+					res.reserve(256);
+					acceptSimple.recvMessage(res);
+					state = res.substr(0, res.find(";;")) + ";";
 			}
 
-			~Msgs() { }
-
-			void read() { }
-			void step() { }
-			void write() { }
+			void add(Packet p)
+			{
+				p.msgId = incrementMsgId();
+				req = req + p.toString();
+			}
 	};
 }
 

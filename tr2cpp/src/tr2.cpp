@@ -16,6 +16,12 @@ namespace tr2cpp
 		joints[6].name = "g0";
 		joints[7].name = "h0";
 		joints[8].name = "h1";
+
+		int numJoints = sizeof(joints) / sizeof(joints[0]);
+		for (int i = 0; i < numJoints; i++)
+		{
+			joints[i]._msgs = &_msgs;
+		}
 	}
 
 	TR2::~TR2()
@@ -40,6 +46,28 @@ namespace tr2cpp
 	void TR2::step()
 	{
 		_msgs.step();
+
+		std::string state = _msgs.getState();
+		int numJoints = sizeof(joints) / sizeof(joints[0]);
+		for (int i = 0; i < numJoints; i++)
+		{
+			unsigned p1 = state.find(joints[i].name) + 3;
+			unsigned p2 = p1 + state.substr(p1, state.length() - p1).find(";");
+			std::string s = state.substr(p1, p2-p1);
+			
+			if (s != "" && s != "ns")
+			{
+				try
+				{
+					joints[i].pos = std::stod(s);
+				}
+				catch (int e)
+				{
+
+				}
+			}
+		}
+		
 	}
 
 	void TR2::setJoint(Joint joint)

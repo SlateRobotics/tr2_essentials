@@ -1,4 +1,5 @@
 #include <sstream>
+#include <math.h>
 #include <tr2_hardware_interface/tr2_hardware_interface.h>
 #include <joint_limits_interface/joint_limits_interface.h>
 #include <joint_limits_interface/joint_limits.h>
@@ -6,6 +7,8 @@
 #include <joint_limits_interface/joint_limits_rosparam.h>
 #include <tr2cpp/tr2.h>
 #include <tr2cpp/joint.h>
+
+#define M_TAU (M_PI * 2)
 
 using namespace hardware_interface;
 using joint_limits_interface::JointLimits;
@@ -56,7 +59,7 @@ namespace tr2_hardware_interface
 		// Initialize controller
 		for (int i = 0; i < num_joints_; ++i)
 		{
-			ROS_INFO_STREAM(joint_names_[i]);
+			ROS_INFO_STREAM("Loading controller for joint " << joint_names_[i]);
 			tr2cpp::Joint joint = tr2.getJoint(joint_names_[i]);
 
 		  ROS_DEBUG_STREAM_NAMED("constructor","Loading joint name: " << joint.name);
@@ -70,7 +73,7 @@ namespace tr2_hardware_interface
 			JointLimits limits;
  	   	SoftJointLimits softLimits;
 			if (getJointLimits(joint.name, nh_, limits) == false) {
-				ROS_ERROR_STREAM("Cannot set joint limits for " << joint.name);
+				ROS_INFO_STREAM("Could not find joint limits for " << joint.name);
 			} else {
 				PositionJointSoftLimitsHandle jointLimitsHandle(jointPositionHandle, limits, softLimits);
 				positionJointSoftLimitsInterface.registerHandle(jointLimitsHandle);
@@ -125,6 +128,14 @@ namespace tr2_hardware_interface
 
 			joint_position_[i] = joint.getPosition();
 
+			if (joint_position_[i] > M_PI) {
+				joint_position_[i] = joint_position_[i] - M_TAU;
+			}
+
+			if (joint_position_[i] > M_PI) {
+				joint_position_[i] = joint_position_[i] - M_TAU;
+			}
+
 			std::ostringstream jointPositionStr;
 			jointPositionStr << joint_position_[i];
 			_logInfo += "  " + joint.name + ": " + jointPositionStr.str() + "\n";
@@ -141,7 +152,7 @@ namespace tr2_hardware_interface
 		{
 			tr2cpp::Joint joint = tr2.getJoint(joint_names_[i]);
 			double effort = joint_effort_command_[i];
-			uint8_t duration = 15;
+			int duration = 500;
 			joint.actuate(effort, duration);
 
 			std::ostringstream jointEffortStr;

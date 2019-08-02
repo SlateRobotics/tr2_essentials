@@ -9,14 +9,19 @@ namespace tr2cpp
 	class Joint
 	{
 		private:
-			double _previousEffort;
+			double _previousEffort = 0;
 		public:
-			std::string name;
 			Joint();
 			~Joint();
+
+			Msgs *_msgs;
+
+			std::string name = "x0";
+			double pos = 0;
+
 			void setMode(int mode);
-			void actuate(double effort, uint8_t duration);
-			void setPosition(double pos);
+			void actuate(double effort, int duration);
+			void setPosition(double pos, double speed);
 			double getPosition();
 			double getPreviousEffort();
 	};

@@ -51,6 +51,10 @@ tr2:
         type: effort_controllers/JointPositionController
         joint: a4
         pid: {p: 9.0, i: 10.0, d: 0.2, i_clamp: 1.0}
+      g0:
+        type: effort_controllers/JointPositionController
+        joint: g0
+        pid: {p: 1.0, i: 0.0, d: 0.0, i_clamp: 1.0}
       h0:
         type: effort_controllers/JointPositionController
         joint: h0
@@ -78,6 +82,9 @@ tr2:
       a4:
         type: effort_controllers/JointEffortController
         joint: a4
+      g0:
+        type: effort_controllers/JointEffortController
+        joint: g0
       h0:
         type: effort_controllers/JointEffortController
         joint: h0
