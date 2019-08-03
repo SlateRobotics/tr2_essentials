@@ -7,9 +7,9 @@
 	<link name="neck_link">
 		<collision>
 			<geometry>
-        <mesh filename="package://tr2_description/meshes/dae/neck.dae" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://tr2_description/meshes/stl/link_h0.stl" scale="0.001 0.001 0.001"/>
 			</geometry>
-			<origin rpy="1.5708 0 0"/>
+			<origin rpy="3.1415 3.1415 0"/>
 		</collision>
 		<inertial>
 			<mass value="0.005"/>
@@ -17,18 +17,21 @@
 		</inertial>
 		<visual>
 			<geometry>
-        <mesh filename="package://tr2_description/meshes/dae/neck.dae" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://tr2_description/meshes/stl/link_h0.stl" scale="0.001 0.001 0.001"/>
 			</geometry>
-			<origin rpy="1.5708 0 0"/>
+	    <material name="slate_gray">
+	      <color rgba="0.2 0.2 0.2 1"/>
+	    </material>
+			<origin rpy="3.1415 3.1415 0"/>
 		</visual>
 	</link>
 
 	<link name="head_link">
 		<collision>
 			<geometry>
-        <mesh filename="package://tr2_description/meshes/dae/head.dae" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://tr2_description/meshes/stl/link_h1.stl" scale="0.001 0.001 0.001"/>
 			</geometry>
-			<origin rpy="1.5708 0 0"/>
+			<origin rpy="0 3.1415 0"/>
 		</collision>
 		<inertial>
 			<mass value="0.005"/>
@@ -36,9 +39,12 @@
 		</inertial>
 		<visual>
 			<geometry>
-        <mesh filename="package://tr2_description/meshes/dae/head.dae" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://tr2_description/meshes/stl/link_h1.stl" scale="0.001 0.001 0.001"/>
 			</geometry>
-			<origin rpy="0 -1.5708 -1.5708"/>
+	    <material name="slate_gray">
+	      <color rgba="0.2 0.2 0.2 1"/>
+	    </material>
+			<origin rpy="0 3.1415 0"/>
 		</visual>
 	</link>
 
@@ -65,7 +71,7 @@
 	<joint name="h0" type="revolute">
 		<parent link="base_link"/>
 		<child link="neck_link"/>
-		<origin xyz="0 -0.017 0.850"/>
+		<origin xyz="0 -0.1227 0.9071"/>
     <axis xyz="0 0 1"/>
 		<limit effort="1.0" lower="-1.5708" upper="1.5708" velocity="0.5"/>
     <dynamics damping="0.1" friction="0.1"/>
@@ -74,7 +80,7 @@
 	<joint name="h1" type="revolute">
 		<parent link="neck_link"/>
 		<child link="head_link"/>
-		<origin xyz="0 0.090789 0.09"/>
+		<origin xyz="-0.0688 0.1745 0.1614" rpy="-0.3490 0 0"/>
     <axis xyz="1 0 0"/>
 		<limit effort="1.0" lower="-0.75" upper="0.4" velocity="0.5"/>
     <dynamics damping="0.1" friction="0.1"/>

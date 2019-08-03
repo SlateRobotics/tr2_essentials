@@ -2,10 +2,10 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:macro name="arm_link" params="name origin_rpy">
-		<link name="${name}_link">
+		<link name="link_${name}">
 			<collision>
 				<geometry>
-		      <mesh filename="package://tr2_description/meshes/dae/${name}.dae" scale="0.001 0.001 0.001"/>
+		      <mesh filename="package://tr2_description/meshes/stl/link_${name}.stl" scale="0.001 0.001 0.001"/>
 				</geometry>
 				<origin rpy="${origin_rpy}" />
 			</collision>
@@ -15,8 +15,11 @@
 			</inertial>
 			<visual>
 				<geometry>
-		      <mesh filename="package://tr2_description/meshes/dae/${name}.dae" scale="0.001 0.001 0.001"/>
+		      <mesh filename="package://tr2_description/meshes/stl/link_${name}.stl" scale="0.001 0.001 0.001"/>
 				</geometry>
+		    <material name="slate_gray">
+		      <color rgba="0.2 0.2 0.2 1"/>
+		    </material>
 				<origin rpy="${origin_rpy}" />
 			</visual>
 		</link>
