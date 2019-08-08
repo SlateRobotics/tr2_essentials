@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="tr2py" name="tr2_node" type="tr2_node.py" output="screen" />
+  <node pkg="tr2py" name="tr2_action_server" type="tr2_action_server.py" output="screen" />
+</launch>

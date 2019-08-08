@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="tr2py" name="tr2_hello_world" type="tr2_hello_world.py" output="screen" required="true" />
+</launch>
