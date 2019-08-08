@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<!-- ARGS -->
+  <arg name="control" default="trajectory" />
+  <arg name="world" default="$(find tr2_gazebo)/worlds/tr2_empty.world"/> 
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+	<!-- PARAMS + ROSPARAMS -->
+  <rosparam file="$(find tr2_hardware_interface)/config/hardware.yaml" command="load"/>
+  <rosparam file="$(find tr2_hardware_interface)/config/controllers_sim.yaml" command="load"/>
+  <rosparam file="$(find tr2_hardware_interface)/config/joint_limits.yaml" command="load"/>
+
+	<param name="robot_description" command="xacro --inorder $(find tr2_description)/robots/tr2.urdf.xacro" />
+
+	<!-- INCLUDES -->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+	</include>
+
+	<!-- NODES -->
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
+		args="
+			/tr2/controller/state
+			/tr2/controller/trajectory/ArmPosition
+			/tr2/controller/position/h0
+			/tr2/controller/position/h1
+		" if="$(eval control == 'trajectory')"/>
+
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
+		args="
+			/tr2/controller/state
+			/tr2/controller/position/a0
+			/tr2/controller/position/a1
+			/tr2/controller/position/a2
+			/tr2/controller/position/a3
+			/tr2/controller/position/a4
+			/tr2/controller/position/h0
+			/tr2/controller/position/h1
+		" if="$(eval control == 'position')"/>
+
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
+		args="
+			/tr2/controller/state
+			/tr2/controller/effort/JointRightShoulderPan
+			/tr2/controller/effort/JointRightShoulderTilt
+			/tr2/controller/effort/JointRightUpperArmRoll
+			/tr2/controller/effort/JointRightElbowFlex
+			/tr2/controller/effort/JointRightForearmRoll
+			/tr2/controller/effort/JointRightWristFlex
+			/tr2/controller/effort/JointRightWristRoll
+			/tr2/controller/effort/JointLeftShoulderPan
+			/tr2/controller/effort/JointLeftShoulderTilt
+			/tr2/controller/effort/JointLeftUpperArmRoll
+			/tr2/controller/effort/JointLeftElbowFlex
+			/tr2/controller/effort/JointLeftForearmRoll
+			/tr2/controller/effort/JointLeftWristFlex
+			/tr2/controller/effort/JointLeftWristRoll
+			/tr2/controller/effort/JointRightGripper
+			/tr2/controller/effort/JointHeadPan
+			/tr2/controller/effort/JointHeadTilt
+			/tr2/controller/effort/JointBaseWheelFR
+			/tr2/controller/effort/JointBaseWheelFL
+			/tr2/controller/effort/JointBaseWheelBR
+			/tr2/controller/effort/JointBaseWheelBL
+			/tr2/controller/effort/JointTorsoExtension
+		" if="$(eval control == 'effort')"/>
+
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+		<param name="publish_frequency" type="double" value="30.0"/>
+	</node>
+
+  <node name="tr2_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model tr2" />
+</launch>
