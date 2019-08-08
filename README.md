@@ -3,6 +3,7 @@ This is a ROS package that is filled with everything you need to get started wit
  - tr2_description - *XACRO and URDF description of the robot for simulations and visualizations*
  - tr2py - *ROS-agnostic Python library for controlling the TR2 and receiving robot state*
  - tr2_moveit - *Integration and config for controlling the TR2 using MoveIt, an inverse kinematics package*
+ - tr2_jetson_setup - *Includes the install scripts and config for setting up TR2 on a brand-new Jetson board*
  - tr2_gazebo **[WIP]** - *Integration and config for simulating the TR2 in Gazebo 1.6*
  - tr2cpp **[WIP]** - *ROS-agnostic C++ library for controlling the TR2 and receiving robot state*
  - tr2_hardware_interface **[WIP]** - *Config and hardware interface for controlling the robot with ros_control*
