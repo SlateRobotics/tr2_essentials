@@ -25,16 +25,19 @@ class Joint:
 		self._id = i
 
 		_topic = "/tr2/joints/" + self._id;
-		self._pub_stop = rospy.Publisher(_topic + "/stop", Bool, queue_size=1)
-		self._pub_mode = rospy.Publisher(_topic + "/mode", UInt8, queue_size=1)
-		self._pub_pos = rospy.Publisher(_topic + "/control/position", Float64, queue_size=1)
-		self._pub_effort = rospy.Publisher(_topic + "/control/effort", Float64, queue_size=1)
+		self._pub_stop = rospy.Publisher(_topic + "/stop", Bool, queue_size=10)
+		self._pub_mode = rospy.Publisher(_topic + "/mode", UInt8, queue_size=10)
+		self._pub_pos = rospy.Publisher(_topic + "/control/position", Float64, queue_size=10)
+		self._pub_effort = rospy.Publisher(_topic + "/control/effort", Float64, queue_size=10)
 
 	def state(self):
 		return self._state
 
 	def release(self):
 		self._pub_stop.publish(0)
+
+	def actuate(self, m, motorDuration = 250):
+		self._pub_effort.publish(m)
 
 	def setPosition(self, p):
 		self._pub_pos.publish(p)
@@ -63,15 +66,19 @@ class TR2:
 		rospy.init_node('tr2_sim', anonymous=True)
 		rospy.Subscriber("/tr2/state", JointState, self._cbtr2state)
 
+		self.b0 = Joint(self, "b0")
+		self.b1 = Joint(self, "b1")
 		self.a0 = Joint(self, "a0")
 		self.a1 = Joint(self, "a1")
 		self.a2 = Joint(self, "a2")
 		self.a3 = Joint(self, "a3")
 		self.a4 = Joint(self, "a4")
+		self.g0 = Joint(self, "g0")
 		self.h0 = Joint(self, "h0")
 		self.h1 = Joint(self, "h1")
 
 		print("TR2 waiting for ROS state on /tr2/state")
+		time.sleep(2)
 		while self._state == None:
 			pass
 
@@ -97,8 +104,9 @@ class TR2:
 	def state(self):
 		return self._state
 		
-	def drive(self, motorLeft, motorRight, motorDuration = 750):
-		pass
+	def drive(self, motorLeft, motorRight, motorDuration = 250):
+		self.b0.actuate(motorLeft)
+		self.b1.actuate(motorRight)
 
 	def release(self):
 		self.a0.release()

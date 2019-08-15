@@ -7,18 +7,17 @@ tr2 = TR2()
 tr2.setMode(tr2.mode_servo)
 tr2.release()
 
-a0_state = tr2.a0.state()
-a2_state = tr2.a2.state()
-a4_state = tr2.a4.state()
+poses = [[0,0,0,0,0,4],[0,0,0,1.5,0,4],[0,0,0.7,1.5,0,4],[0,0,-0.7,1.5,0,8],[0,0,0,1.5,0,4]]
 
-tr2.a0.setPosition(a0_state + 0.25)
-tr2.a2.setPosition(a2_state + 0.37)
-tr2.a4.setPosition(a4_state - 0.61)
-time.sleep(5)
+tr2.drive(1, -1)
+for p in poses:
+	print("Moving to position", p)
+	tr2.a0.setPosition(p[0])
+	tr2.a1.setPosition(p[1])
+	tr2.a2.setPosition(p[2])
+	tr2.a3.setPosition(p[3])
+	tr2.a4.setPosition(p[4])
+	time.sleep(p[5])
 
-tr2.a0.setPosition(a0_state)
-tr2.a2.setPosition(a2_state)
-tr2.a4.setPosition(a4_state)
-time.sleep(3)
-
+tr2.drive(0, 0)
 tr2.stop()

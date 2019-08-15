@@ -10,8 +10,9 @@
 			<parent link="base_link"/>
 			<child link="${name}_link"/>
 		  <axis xyz="0 1 0"/>
+			<limit effort="1.0" lower="-1.0" upper="1.0" velocity="12.0"/>
 			<xacro:insert_block name="origin" />
-    	<dynamics damping="0.1" friction="0.1"/>
+    	<dynamics damping="0" friction="0"/>
 		</joint>
 		<link name="${name}_link">
 			<collision>
@@ -109,7 +110,6 @@
 		<child link="link_b2"/>
 		<origin xyz="0 -0.1960 0" rpy="0 3.1415 -1.5708"/>
     <axis xyz="0 0 1"/>
-		<limit effort="1.0" lower="-1.8" upper="1.8" velocity="0.2932"/>
     <dynamics damping="0.1" friction="0.1"/>
 	</joint>
 
@@ -118,15 +118,14 @@
 		<child link="link_b3"/>
 		<origin xyz="-0.0138 0 0.0390" rpy="1.5708 0 0"/>
     <axis xyz="0 0 1"/>
-		<limit effort="1.0" lower="-1.8" upper="1.8" velocity="0.2932"/>
     <dynamics damping="0.1" friction="0.1"/>
 	</joint>
 
-	<xacro:tr2_wheel name="b0l">
-		<origin rpy="0 0 -1.570796" xyz="-0.3019 0.1502 0.0508"/>
+	<xacro:tr2_wheel name="b0">
+		<origin rpy="0 0 1.570796" xyz="-0.3019 0.1502 0.0508"/>
 	</xacro:tr2_wheel>
 
-	<xacro:tr2_wheel name="b0r">
+	<xacro:tr2_wheel name="b1">
 		<origin rpy="0 0 1.570796" xyz="0.3019 0.1502 0.0508"/>
 	</xacro:tr2_wheel>
 

@@ -10,6 +10,19 @@
   <arg name="debug" default="false"/>
 
 	<remap from="/joint_states" to="/tr2/state"/>
+	<remap from="/tr2/joints/b0/control/effort/command" to="/tr2/joints/b0/control/effort"/>
+	<remap from="/tr2/joints/b1/control/effort/command" to="/tr2/joints/b1/control/effort"/>
+	<remap from="/tr2/joints/a0/control/effort/command" to="/tr2/joints/a0/control/effort"/>
+	<remap from="/tr2/joints/a1/control/effort/command" to="/tr2/joints/a1/control/effort"/>
+	<remap from="/tr2/joints/a2/control/effort/command" to="/tr2/joints/a2/control/effort"/>
+	<remap from="/tr2/joints/a3/control/effort/command" to="/tr2/joints/a3/control/effort"/>
+	<remap from="/tr2/joints/a4/control/effort/command" to="/tr2/joints/a4/control/effort"/>
+	<remap from="/tr2/joints/g0/control/effort/command" to="/tr2/joints/g0/control/effort"/>
+	<remap from="/tr2/joints/h0/control/effort/command" to="/tr2/joints/h0/control/effort"/>
+	<remap from="/tr2/joints/h1/control/effort/command" to="/tr2/joints/h1/control/effort"/>
+
+	<remap from="/tr2/joints/b0/control/position/command" to="/tr2/joints/b0/control/position"/>
+	<remap from="/tr2/joints/b1/control/position/command" to="/tr2/joints/b1/control/position"/>
 	<remap from="/tr2/joints/a0/control/position/command" to="/tr2/joints/a0/control/position"/>
 	<remap from="/tr2/joints/a1/control/position/command" to="/tr2/joints/a1/control/position"/>
 	<remap from="/tr2/joints/a2/control/position/command" to="/tr2/joints/a2/control/position"/>
@@ -35,11 +48,8 @@
 		args="
 			/tr2/state
 			/tr2/arm/follow_joint_trajectory
-			/tr2/joints/a0/control/position
-			/tr2/joints/a1/control/position
-			/tr2/joints/a2/control/position
-			/tr2/joints/a3/control/position
-			/tr2/joints/a4/control/position
+			/tr2/joints/b0/control/effort
+			/tr2/joints/b1/control/effort
 			/tr2/joints/h0/control/position
 			/tr2/joints/h1/control/position
 		" if="$(eval control == 'trajectory')"/>
@@ -47,6 +57,8 @@
 	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
 		args="
 			/tr2/state
+			/tr2/joints/b0/control/effort
+			/tr2/joints/b1/control/effort
 			/tr2/joints/a0/control/position
 			/tr2/joints/a1/control/position
 			/tr2/joints/a2/control/position
@@ -59,6 +71,8 @@
 	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
 		args="
 			/tr2/state
+			/tr2/joints/b0/control/effort
+			/tr2/joints/b1/control/effort
 			/tr2/joints/a0/control/effort
 			/tr2/joints/a1/control/effort
 			/tr2/joints/a2/control/effort

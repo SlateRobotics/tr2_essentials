@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <transmission name="b0l_trans">
+  <transmission name="b0_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="motor19">
       <mechanicalReduction>1</mechanicalReduction>
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </actuator>
-    <joint name="b0l">
+    <joint name="b0">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
-  <transmission name="b0r_trans">
+  <transmission name="b1_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="motor20">
       <mechanicalReduction>1</mechanicalReduction>
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </actuator>
-    <joint name="b0r">
+    <joint name="b1">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
   </transmission>

@@ -35,6 +35,11 @@ tr2:
         effort:
           type: effort_controllers/JointEffortController
           joint: b0
+    b1:
+      control:
+        effort:
+          type: effort_controllers/JointEffortController
+          joint: b1
     a0:
       control:
         position:
