@@ -52,7 +52,7 @@ class TR2:
 	def state(self):
 		return self._state
 		
-	def drive(self, motorLeft, motorRight, motorDuration = 750):
+	def drive(self, motorLeft, motorRight, motorDuration = 250):
 		offsetBinary = 100
 			
 		packet = tr2_msgs.Packet()

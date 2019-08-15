@@ -56,7 +56,7 @@ class Joint:
 		self._tr2._msgs.add(packet)
 		self._tr2.step()
 		
-	def actuate(self, motorValue, motorDuration = 500):
+	def actuate(self, motorValue, motorDuration = 250):
 		offsetBinary = 128
 		x = int(math.floor(motorValue * 100.0))
 			

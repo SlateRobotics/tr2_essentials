@@ -53,6 +53,8 @@ def tr2_arm_follow_joint_trajectory(goal):
 	tr2_mode_servo_pub.publish(1)
 	tr2_stop_pub.publish(0)
 
+	time.sleep(0.050)
+
 	success = True
 	feedback = FollowJointTrajectoryFeedback()
 	result = FollowJointTrajectoryResult()
@@ -82,6 +84,7 @@ def tr2_arm_follow_joint_trajectory(goal):
 			tr2_arm_action_server.publish_feedback(feedback)
 
 	tr2_arm_action_server.set_succeeded(result)
+	time.sleep(5)
 	tr2_stop_pub.publish(1)
 
 def program():

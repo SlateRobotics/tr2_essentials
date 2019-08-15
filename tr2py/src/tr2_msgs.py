@@ -74,7 +74,7 @@ class Msgs:
 	_msgs = ""
 	_msgId = 0
 
-	_freq_hz = 15
+	_freq_hz = 20
 	_close = False
 	_step_avail = True
 

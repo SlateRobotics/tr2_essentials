@@ -9,6 +9,16 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
 
+	<remap from="/joint_states" to="/tr2/state"/>
+	<remap from="/tr2/joints/a0/control/position/command" to="/tr2/joints/a0/control/position"/>
+	<remap from="/tr2/joints/a1/control/position/command" to="/tr2/joints/a1/control/position"/>
+	<remap from="/tr2/joints/a2/control/position/command" to="/tr2/joints/a2/control/position"/>
+	<remap from="/tr2/joints/a3/control/position/command" to="/tr2/joints/a3/control/position"/>
+	<remap from="/tr2/joints/a4/control/position/command" to="/tr2/joints/a4/control/position"/>
+	<remap from="/tr2/joints/g0/control/position/command" to="/tr2/joints/g0/control/position"/>
+	<remap from="/tr2/joints/h0/control/position/command" to="/tr2/joints/h0/control/position"/>
+	<remap from="/tr2/joints/h1/control/position/command" to="/tr2/joints/h1/control/position"/>
+
 	<!-- PARAMS + ROSPARAMS -->
   <rosparam file="$(find tr2_hardware_interface)/config/hardware.yaml" command="load"/>
   <rosparam file="$(find tr2_hardware_interface)/config/controllers_sim.yaml" command="load"/>
@@ -23,49 +33,39 @@
 	<!-- NODES -->
 	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
 		args="
-			/tr2/controller/state
-			/tr2/controller/trajectory/ArmPosition
-			/tr2/controller/position/h0
-			/tr2/controller/position/h1
+			/tr2/state
+			/tr2/arm/follow_joint_trajectory
+			/tr2/joints/a0/control/position
+			/tr2/joints/a1/control/position
+			/tr2/joints/a2/control/position
+			/tr2/joints/a3/control/position
+			/tr2/joints/a4/control/position
+			/tr2/joints/h0/control/position
+			/tr2/joints/h1/control/position
 		" if="$(eval control == 'trajectory')"/>
 
 	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
 		args="
-			/tr2/controller/state
-			/tr2/controller/position/a0
-			/tr2/controller/position/a1
-			/tr2/controller/position/a2
-			/tr2/controller/position/a3
-			/tr2/controller/position/a4
-			/tr2/controller/position/h0
-			/tr2/controller/position/h1
+			/tr2/state
+			/tr2/joints/a0/control/position
+			/tr2/joints/a1/control/position
+			/tr2/joints/a2/control/position
+			/tr2/joints/a3/control/position
+			/tr2/joints/a4/control/position
+			/tr2/joints/h0/control/position
+			/tr2/joints/h1/control/position
 		" if="$(eval control == 'position')"/>
 
 	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
 		args="
-			/tr2/controller/state
-			/tr2/controller/effort/JointRightShoulderPan
-			/tr2/controller/effort/JointRightShoulderTilt
-			/tr2/controller/effort/JointRightUpperArmRoll
-			/tr2/controller/effort/JointRightElbowFlex
-			/tr2/controller/effort/JointRightForearmRoll
-			/tr2/controller/effort/JointRightWristFlex
-			/tr2/controller/effort/JointRightWristRoll
-			/tr2/controller/effort/JointLeftShoulderPan
-			/tr2/controller/effort/JointLeftShoulderTilt
-			/tr2/controller/effort/JointLeftUpperArmRoll
-			/tr2/controller/effort/JointLeftElbowFlex
-			/tr2/controller/effort/JointLeftForearmRoll
-			/tr2/controller/effort/JointLeftWristFlex
-			/tr2/controller/effort/JointLeftWristRoll
-			/tr2/controller/effort/JointRightGripper
-			/tr2/controller/effort/JointHeadPan
-			/tr2/controller/effort/JointHeadTilt
-			/tr2/controller/effort/JointBaseWheelFR
-			/tr2/controller/effort/JointBaseWheelFL
-			/tr2/controller/effort/JointBaseWheelBR
-			/tr2/controller/effort/JointBaseWheelBL
-			/tr2/controller/effort/JointTorsoExtension
+			/tr2/state
+			/tr2/joints/a0/control/effort
+			/tr2/joints/a1/control/effort
+			/tr2/joints/a2/control/effort
+			/tr2/joints/a3/control/effort
+			/tr2/joints/a4/control/effort
+			/tr2/joints/h0/control/effort
+			/tr2/joints/h1/control/effort
 		" if="$(eval control == 'effort')"/>
 
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
