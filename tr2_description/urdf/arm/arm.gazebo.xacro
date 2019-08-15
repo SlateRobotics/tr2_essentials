@@ -3,6 +3,33 @@
 
   <xacro:include filename="$(find tr2_description)/urdf/arm/arm.macros.xacro" />
 
+	<gazebo reference="link_a0">
+		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+
+	<gazebo reference="link_a1">
+		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+
+	<gazebo reference="link_a2">
+		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+
+	<gazebo reference="link_a3">
+		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+
+	<gazebo reference="link_g0">
+		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+
+	<gazebo reference="link_g1">
+		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+
+	<gazebo reference="link_g1_b">
+		<material>Gazebo/DarkGrey</material>
+	</gazebo>
 
 </robot>
 

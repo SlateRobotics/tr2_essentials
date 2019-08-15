@@ -14,6 +14,7 @@
 			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
 			<legacyModeNS>true</legacyModeNS>
 		</plugin>
+    <material>Gazebo/LightGrey</material>
 	</gazebo>
 
 </robot>
