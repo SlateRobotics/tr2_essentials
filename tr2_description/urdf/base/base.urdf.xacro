@@ -10,9 +10,9 @@
 			<parent link="base_link"/>
 			<child link="link_${name}"/>
 		  <axis xyz="0 1 0"/>
-			<limit effort="1.0" lower="-1.0" upper="1.0" velocity="12.0"/>
+			<limit effort="100.0" lower="-12.0" upper="12.0" velocity="12.0"/>
 			<xacro:insert_block name="origin" />
-    	<dynamics damping="0" friction="0"/>
+    	<dynamics damping="1.0" friction="1.0"/>
 		</joint>
 		<link name="link_${name}">
 			<collision>
@@ -22,7 +22,7 @@
 				<origin rpy="0 0 1.5708" />
 			</collision>
 			<inertial>
-				<mass value="1.0"/>
+				<mass value="12.0"/>
 				<inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0" ixz="0" iyz="0" />
 			</inertial>
 			<visual>

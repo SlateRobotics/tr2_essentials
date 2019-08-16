@@ -37,7 +37,12 @@ class Joint:
 		self._pub_stop.publish(0)
 
 	def actuate(self, m, motorDuration = 250):
-		self._pub_effort.publish(m)
+		if m > 1.0:
+			m = 1.0
+		elif m < -1.0:
+			m = -1.0
+
+		self._pub_effort.publish(m * 100.0)
 
 	def setPosition(self, p):
 		self._pub_pos.publish(p)

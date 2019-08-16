@@ -3,6 +3,8 @@
 
   <xacro:include filename="$(find tr2_description)/urdf/arm/arm.macros.xacro" />
 
+	<xacro:mimic_joint parent="g0" joint="g0_b" multiplier="-1"/>
+
 	<gazebo reference="link_a0">
 		<material>Gazebo/DarkGrey</material>
 	</gazebo>

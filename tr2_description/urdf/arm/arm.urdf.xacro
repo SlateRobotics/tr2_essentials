@@ -63,7 +63,7 @@
 		<child link="link_g1"/>
 		<origin rpy="0 0 0" xyz="-0.135 0.0075 0"/>
     <axis xyz="0 1 0"/>
-		<limit effort="1.0" lower="0" upper="0.041" velocity="0.5"/>
+		<limit effort="1.0" lower="0" upper="0.041" velocity="0.01"/>
     <dynamics damping="0.1" friction="0.1"/>
 	</joint>
 
@@ -72,7 +72,8 @@
 		<child link="link_g1_b"/>
 		<origin rpy="0 0 0" xyz="-0.135 -0.0075 0"/>
     <axis xyz="0 1 0"/>
-		<limit effort="1.0" lower="-0.041" upper="0" velocity="0.5"/>
+		<mimic joint="g0" multiplier="-1" offset="0"/>
+		<limit effort="1.0" lower="-0.041" upper="0" velocity="0.01"/>
     <dynamics damping="0.1" friction="0.1"/>
 	</joint>
 
