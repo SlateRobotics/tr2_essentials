@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import time
-from tr2_sim import TR2
+from tr2py.tr2_sim import TR2
 
 tr2 = TR2()
 tr2.setMode(tr2.mode_servo)

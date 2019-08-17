@@ -7,7 +7,6 @@ import signal
 import numpy as np
 import math
 import datetime
-import tr2
 from sensor_msgs.msg import Joy
 from std_msgs.msg import Float64
 

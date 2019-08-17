@@ -36,14 +36,21 @@ class TR2:
 	mode_rotate = 0x12
 
 	def __init__(self):
+		self.b0 = Joint(self, "b0")
 		self.a0 = Joint(self, "a0")
 		self.a1 = Joint(self, "a1")
 		self.a2 = Joint(self, "a2")
 		self.a3 = Joint(self, "a3")
 		self.a4 = Joint(self, "a4")
+		self.g0 = Joint(self, "g0")
 		self.h0 = Joint(self, "h0")
 		self.h1 = Joint(self, "h1")
 		self._msgs.state_change = self.handle_state_change
+
+		print("TR2 waiting for state")
+		while self._state == None:
+			self.step()
+		print("TR2 ready")
 
 	def handle_state_change(self, state):
 		if self.state_change != None:
@@ -92,6 +99,17 @@ class TR2:
 		self.a4.setMode(mode)
 		self.h0.setMode(mode)
 		self.h1.setMode(mode)
+
+	def sleep(self, sec):
+		t_start = time.time()
+		while time.time() - t_start < sec:
+			self.step()
+
+	def getJoint(self, id):
+		try:
+			return getattr(self,id)
+		except:
+			pass
     
 	def step(self):
 		global close
@@ -103,7 +121,10 @@ class TR2:
 		self._msgs.step()
 		self._state = self._msgs.state()
 
-		ids, states = self._msgs.state()
+		if self._state == None:
+			return
+
+		ids, states = self._state
 		for i in range(len(ids)):
 			try:
 				getattr(self,ids[i])._state = states[i]
@@ -112,10 +133,8 @@ class TR2:
 		
 	def spin(self, condition = True):
 		global close
-		print "TR2 Ready"
 		while condition == True or close == True:
 			self.step()
-		self.close()
 			
 	def close(self):
 		pass

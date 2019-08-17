@@ -3,7 +3,7 @@
 import time
 import sys
 import math
-from tr2 import TR2
+from tr2py.tr2 import TR2
 import rospy
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Bool

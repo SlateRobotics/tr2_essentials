@@ -82,7 +82,7 @@ class Msgs:
 	server_conn = None
 	server_addr = None
 
-	_state = ([],[])
+	_state = None
 	state_change = None
 
 	t_start = datetime.datetime.now()
