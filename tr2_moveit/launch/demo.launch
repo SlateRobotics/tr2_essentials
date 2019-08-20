@@ -50,4 +50,6 @@
     <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
   </include>
 
+	<include file="$(find tr2py)/launch/tr2_node.launch" />
+
 </launch>
