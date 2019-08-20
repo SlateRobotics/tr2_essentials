@@ -137,4 +137,6 @@ class TR2:
 			self.step()
 			
 	def close(self):
-		pass
+		self.sleep(1)
+		while self._msgs._msgs != "":
+			self.step()
