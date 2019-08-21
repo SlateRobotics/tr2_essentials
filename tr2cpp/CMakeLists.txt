@@ -35,8 +35,8 @@ add_library(tr2cpp
 	include/${PROJECT_NAME}/Socket.h
 	include/${PROJECT_NAME}/Utility.h
 	include/${PROJECT_NAME}/Socket.tpp
-	src/tr2.cpp
-	src/joint.cpp
+	src/${PROJECT_NAME}/tr2.cpp
+	src/${PROJECT_NAME}/joint.cpp
 	src/Protocol.cpp
 	src/ProtocolSimple.cpp
 	src/Socket.cpp

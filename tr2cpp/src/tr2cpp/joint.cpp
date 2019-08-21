@@ -41,7 +41,7 @@ namespace tr2cpp
 	void Joint::actuate(double effort, int duration = 500)
 	{
 		int offsetBinary = 128;
-		int x = std::floor(effort * 100.0);
+		int x = std::floor(effort);
 
 		if (x > 100)
 		{

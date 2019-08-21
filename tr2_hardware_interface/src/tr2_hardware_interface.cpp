@@ -18,7 +18,7 @@ using joint_limits_interface::PositionJointSoftLimitsInterface;
 
 namespace tr2_hardware_interface
 {
-	tr2HardwareInterface::tr2HardwareInterface(ros::NodeHandle& nh) \
+	TR2HardwareInterface::TR2HardwareInterface(ros::NodeHandle& nh) \
 		: nh_(nh)
 	{
 		init();
@@ -27,16 +27,16 @@ namespace tr2_hardware_interface
 		nh_.param("/tr2/hardware_interface/loop_hz", loop_hz_, 0.1);
 		ROS_DEBUG_STREAM_NAMED("constructor","Using loop freqency of " << loop_hz_ << " hz");
 		ros::Duration update_freq = ros::Duration(1.0/loop_hz_);
-		non_realtime_loop_ = nh_.createTimer(update_freq, &tr2HardwareInterface::update, this);
+		non_realtime_loop_ = nh_.createTimer(update_freq, &TR2HardwareInterface::update, this);
 
-		ROS_INFO_NAMED("hardware_interface", "Loaded generic_hardware_interface.");
+		ROS_INFO_NAMED("hardware_interface", "Loaded tr2_hardware_interface.");
 	}
 
-	tr2HardwareInterface::~tr2HardwareInterface()
+	TR2HardwareInterface::~TR2HardwareInterface()
 	{
 	}
 
-	void tr2HardwareInterface::init()
+	void TR2HardwareInterface::init()
 	{
 		//joint_mode_ = 3; // ONLY EFFORT FOR NOW
 		// Get joint names
@@ -97,7 +97,7 @@ namespace tr2_hardware_interface
 		registerInterface(&positionJointSoftLimitsInterface);
 	}
 
-	void tr2HardwareInterface::update(const ros::TimerEvent& e)
+	void TR2HardwareInterface::update(const ros::TimerEvent& e)
 	{
 		_logInfo = "\n";
 		_logInfo += "Joint Position Command:\n";
@@ -119,7 +119,7 @@ namespace tr2_hardware_interface
 		//ROS_INFO_STREAM(_logInfo);
 	}
 
-	void tr2HardwareInterface::read()
+	void TR2HardwareInterface::read()
 	{
 		_logInfo += "Joint State:\n";
 		for (int i = 0; i < num_joints_; i++)
@@ -143,7 +143,7 @@ namespace tr2_hardware_interface
 		}
 	}
 
-	void tr2HardwareInterface::write(ros::Duration elapsed_time)
+	void TR2HardwareInterface::write(ros::Duration elapsed_time)
 	{
 		positionJointSoftLimitsInterface.enforceLimits(elapsed_time);
 
@@ -151,13 +151,19 @@ namespace tr2_hardware_interface
 		for (int i = 0; i < num_joints_; i++)
 		{
 			tr2cpp::Joint joint = tr2.getJoint(joint_names_[i]);
-			double effort = joint_effort_command_[i];
-			int duration = 500;
-			joint.actuate(effort, duration);
 
-			std::ostringstream jointEffortStr;
-			jointEffortStr << joint_effort_command_[i];
-			_logInfo += "  " + joint.name + ": " + jointEffortStr.str() + "\n";
+			if (joint.name == "g0") {
+				//std::cout << joint_names_[i] << ", " << joint_position_command_[i] << "\n";
+			} else {
+				double effort = joint_effort_command_[i];
+				int duration = 150;
+				//std::cout << joint_names_[i] << ", " << effort << "\n";
+				joint.actuate(effort, duration);
+
+				std::ostringstream jointEffortStr;
+				jointEffortStr << joint_effort_command_[i];
+				_logInfo += "  " + joint.name + ": " + jointEffortStr.str() + "\n";
+			}
 		}
 	}
 }

@@ -27,11 +27,11 @@ namespace tr2_hardware_interface
 	static const double POSITION_STEP_FACTOR = 10;
 	static const double VELOCITY_STEP_FACTOR = 10;
 
-	class tr2HardwareInterface: public tr2_hardware_interface::tr2Hardware
+	class TR2HardwareInterface: public tr2_hardware_interface::tr2Hardware
 	{
 		public:
-			tr2HardwareInterface(ros::NodeHandle& nh);
-			~tr2HardwareInterface();
+			TR2HardwareInterface(ros::NodeHandle& nh);
+			~TR2HardwareInterface();
 			void init();
 			void update(const ros::TimerEvent& e);
 			void read();

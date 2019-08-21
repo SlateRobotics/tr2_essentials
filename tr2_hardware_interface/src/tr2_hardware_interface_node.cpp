@@ -1,18 +1,17 @@
+#include <ros/callback_queue.h>
 #include <tr2_hardware_interface/tr2_hardware_interface.h>
 
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "tr2_hardware_interface");
+	ros::CallbackQueue ros_queue;
+
   ros::NodeHandle nh;
+	nh.setCallbackQueue(&ros_queue);
+  tr2_hardware_interface::TR2HardwareInterface tr2(nh);
 
-  // NOTE: We run the ROS loop in a separate thread as external calls such
-  // as service callbacks to load controllers can block the (main) control loop
-  ros::AsyncSpinner spinner(1);
-  spinner.start();
-
-  tr2_hardware_interface::tr2HardwareInterface tr2(nh);
-
-  ros::waitForShutdown();
+	ros::MultiThreadedSpinner spinner(0);
+	spinner.spin(&ros_queue);
 
   return 0;
 }

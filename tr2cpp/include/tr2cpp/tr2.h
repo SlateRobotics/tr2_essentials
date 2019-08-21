@@ -16,10 +16,11 @@ namespace tr2cpp
 			TR2();
 			~TR2();
 
-			Joint joints[9];
+			Joint joints[10];
 			Joint getJoint(std::string jointName);
 
 			void step();
+			void waitForState();
 			void setJoint(tr2cpp::Joint joint);
 	};
 }
