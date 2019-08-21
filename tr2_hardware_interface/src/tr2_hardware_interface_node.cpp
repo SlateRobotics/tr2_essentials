@@ -12,7 +12,7 @@ int main(int argc, char** argv)
 
   tr2_hardware_interface::tr2HardwareInterface tr2(nh);
 
-  ros::spin();
+  ros::waitForShutdown();
 
   return 0;
 }
