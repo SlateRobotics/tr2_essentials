@@ -4,7 +4,7 @@
   <transmission name="h0_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="h0_actuator">
-      <mechanicalReduction>378</mechanicalReduction>
+      <mechanicalReduction>2000</mechanicalReduction>
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </actuator>
     <joint name="h0">
@@ -15,7 +15,7 @@
   <transmission name="h1_trans">
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="h1_actuator">
-      <mechanicalReduction>378</mechanicalReduction>
+      <mechanicalReduction>2000</mechanicalReduction>
       <hardwareInterface>EffortJointInterface</hardwareInterface>
     </actuator>
     <joint name="h1">

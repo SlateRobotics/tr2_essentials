@@ -61,11 +61,19 @@
     </inertial>
   </link>
 
+  <link name="camera_link_optical">
+  </link>
+
+  <joint name="camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+    <parent link="camera_link"/>
+    <child link="camera_link_optical"/>
+  </joint>
+
 	<joint name="camera_joint" type="fixed">
 		<parent link="head_link"/>
 		<child link="camera_link"/>
-		<origin rpy="0 0 1.5708" xyz="0.025 0.150 0.0"/>
-		<axis xyz="1 0 0" />
+		<origin rpy="0 0 0" xyz="0.025 0.150 0.0"/>
 	</joint>
 
 	<joint name="h0" type="revolute">
@@ -73,7 +81,7 @@
 		<child link="neck_link"/>
 		<origin xyz="0 -0.1227 0.9071"/>
     <axis xyz="0 0 1"/>
-		<limit effort="1.0" lower="-6.29" upper="6.29" velocity="1.4661"/>
+		<limit effort="100.0" lower="-15" upper="15" velocity="0.20"/>
     <dynamics damping="0.1" friction="0.1"/>
 	</joint>
 
@@ -82,7 +90,7 @@
 		<child link="head_link"/>
 		<origin xyz="-0.0688 0.1745 0.1614" rpy="-0.3490 0 0"/>
     <axis xyz="1 0 0"/>
-		<limit effort="1.0" lower="-6.29" upper="6.29" velocity="1.4661"/>
+		<limit effort="100.0" lower="-15" upper="15" velocity="0.20"/>
     <dynamics damping="0.1" friction="0.1"/>
 	</joint>
 
