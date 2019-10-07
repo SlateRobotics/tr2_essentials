@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<!-- ARGS -->
+  <arg name="control" default="trajectory" />
+  <arg name="world" default="$(find tr2_gazebo)/worlds/tr2_boxes.world"/> 
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+	<remap from="/joint_states" to="/tr2/state"/>
+	<remap from="/tr2/joints/b0/control/velocity/command" to="/tr2/joints/b0/control/velocity"/>
+	<remap from="/tr2/joints/b1/control/velocity/command" to="/tr2/joints/b1/control/velocity"/>
+
+	<remap from="/tr2/joints/b0/control/effort/command" to="/tr2/joints/b0/control/effort"/>
+	<remap from="/tr2/joints/b1/control/effort/command" to="/tr2/joints/b1/control/effort"/>
+	<remap from="/tr2/joints/a0/control/effort/command" to="/tr2/joints/a0/control/effort"/>
+	<remap from="/tr2/joints/a1/control/effort/command" to="/tr2/joints/a1/control/effort"/>
+	<remap from="/tr2/joints/a2/control/effort/command" to="/tr2/joints/a2/control/effort"/>
+	<remap from="/tr2/joints/a3/control/effort/command" to="/tr2/joints/a3/control/effort"/>
+	<remap from="/tr2/joints/a4/control/effort/command" to="/tr2/joints/a4/control/effort"/>
+	<remap from="/tr2/joints/g0/control/effort/command" to="/tr2/joints/g0/control/effort"/>
+	<remap from="/tr2/joints/h0/control/effort/command" to="/tr2/joints/h0/control/effort"/>
+	<remap from="/tr2/joints/h1/control/effort/command" to="/tr2/joints/h1/control/effort"/>
+
+	<remap from="/tr2/joints/b0/control/position/command" to="/tr2/joints/b0/control/position"/>
+	<remap from="/tr2/joints/b1/control/position/command" to="/tr2/joints/b1/control/position"/>
+	<remap from="/tr2/joints/a0/control/position/command" to="/tr2/joints/a0/control/position"/>
+	<remap from="/tr2/joints/a1/control/position/command" to="/tr2/joints/a1/control/position"/>
+	<remap from="/tr2/joints/a2/control/position/command" to="/tr2/joints/a2/control/position"/>
+	<remap from="/tr2/joints/a3/control/position/command" to="/tr2/joints/a3/control/position"/>
+	<remap from="/tr2/joints/a4/control/position/command" to="/tr2/joints/a4/control/position"/>
+	<remap from="/tr2/joints/g0/control/position/command" to="/tr2/joints/g0/control/position"/>
+	<remap from="/tr2/joints/h0/control/position/command" to="/tr2/joints/h0/control/position"/>
+	<remap from="/tr2/joints/h1/control/position/command" to="/tr2/joints/h1/control/position"/>
+
+	<!-- PARAMS + ROSPARAMS -->
+  <rosparam file="$(find tr2_hardware_interface)/config/hardware.yaml" command="load"/>
+  <rosparam file="$(find tr2_hardware_interface)/config/controllers_sim.yaml" command="load"/>
+  <rosparam file="$(find tr2_hardware_interface)/config/joint_limits.yaml" command="load"/>
+
+	<param name="robot_description" command="xacro --inorder $(find tr2_description)/robots/tr2.urdf.xacro" />
+
+	<!-- INCLUDES -->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">+
+    <arg name="world_name" value="$(arg world)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+	</include>
+
+	<!-- NODES -->
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
+		args="
+			/tr2/state
+			/tr2/arm/follow_joint_trajectory
+			/tr2/joints/b0/control/effort
+			/tr2/joints/b1/control/effort
+			/tr2/joints/g0/control/position
+			/tr2/joints/h0/control/position
+			/tr2/joints/h1/control/position
+		" if="$(eval control == 'trajectory')"/>
+
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
+		args="
+			/tr2/state
+			/tr2/joints/b0/control/velocity
+			/tr2/joints/b1/control/velocity
+			/tr2/joints/a0/control/position
+			/tr2/joints/a1/control/position
+			/tr2/joints/a2/control/position
+			/tr2/joints/a3/control/position
+			/tr2/joints/a4/control/position
+			/tr2/joints/g0/control/position
+			/tr2/joints/h0/control/position
+			/tr2/joints/h1/control/position
+		" if="$(eval control == 'position')"/>
+
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
+		args="
+			/tr2/state
+			/tr2/joints/b0/control/effort
+			/tr2/joints/b1/control/effort
+			/tr2/joints/a0/control/effort
+			/tr2/joints/a1/control/effort
+			/tr2/joints/a2/control/effort
+			/tr2/joints/a3/control/effort
+			/tr2/joints/a4/control/effort
+			/tr2/joints/g0/control/position
+			/tr2/joints/h0/control/effort
+			/tr2/joints/h1/control/effort
+		" if="$(eval control == 'effort')"/>
+
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+		<param name="publish_frequency" type="double" value="30.0"/>
+	</node>
+</launch>

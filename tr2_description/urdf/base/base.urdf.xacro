@@ -12,7 +12,7 @@
 		  <axis xyz="0 1 0"/>
 			<limit effort="100.0" lower="-4.0" upper="4.0" velocity="4.0"/>
 			<xacro:insert_block name="origin" />
-    	<dynamics damping="1.0" friction="2.0"/>
+    	<dynamics damping="0.1" friction="0.1"/>
 		</joint>
 		<link name="link_${name}">
 			<collision>
