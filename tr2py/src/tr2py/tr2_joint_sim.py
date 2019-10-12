@@ -28,6 +28,7 @@ class Joint:
 		self._pub_stop = rospy.Publisher(_topic + "/stop", Bool, queue_size=10)
 		self._pub_mode = rospy.Publisher(_topic + "/mode", UInt8, queue_size=10)
 		self._pub_pos = rospy.Publisher(_topic + "/control/position", Float64, queue_size=10)
+		self._pub_vel = rospy.Publisher(_topic + "/control/velocity", Float64, queue_size=10)
 		self._pub_effort = rospy.Publisher(_topic + "/control/effort", Float64, queue_size=10)
 
 	def state(self):
@@ -46,6 +47,9 @@ class Joint:
 
 	def setPosition(self, p):
 		self._pub_pos.publish(p)
+
+	def setVelocity(self, v):
+		self._pub_vel.publish(v)
 
 	def stop(self):
 		self._pub_stop.publish(1)

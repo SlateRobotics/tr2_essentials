@@ -38,7 +38,7 @@ tr2:
         velocity:
           type: effort_controllers/JointVelocityController
           joint: b0
-          pid: {p: 75.0, i: 75.0, d: 0.2, i_clamp: 1.0}
+          pid: {p: 0.4, i: 0.1, d: 0.0, i_clamp: 0.1}
     b1:
       control:
         effort:
@@ -47,7 +47,7 @@ tr2:
         velocity:
           type: effort_controllers/JointVelocityController
           joint: b1
-          pid: {p: 75.0, i: 75.0, d: 0.2, i_clamp: 1.0}
+          pid: {p: 0.4, i: 0.1, d: 0.0, i_clamp: 0.1}
     a0:
       control:
         position:

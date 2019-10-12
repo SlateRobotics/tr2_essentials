@@ -9,3 +9,11 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
 )
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
+
+install(PROGRAMS src/tr2_navigation/__init__.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)

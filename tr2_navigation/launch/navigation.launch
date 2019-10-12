@@ -1,0 +1,3 @@
+<launch>
+ <node pkg="tr2_navigation" name="tr2_navigation_node" type="navigation.py" output="screen" />
+</launch>

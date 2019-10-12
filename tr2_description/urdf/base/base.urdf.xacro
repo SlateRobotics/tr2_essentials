@@ -10,9 +10,9 @@
 			<parent link="base_link"/>
 			<child link="link_${name}"/>
 		  <axis xyz="0 1 0"/>
-			<limit effort="100.0" lower="-4.0" upper="4.0" velocity="4.0"/>
+			<limit effort="100.0" velocity="8.8"/>
 			<xacro:insert_block name="origin" />
-    	<dynamics damping="0.1" friction="0.1"/>
+    	<dynamics damping="0.001" friction="0.001"/>
 		</joint>
 		<link name="link_${name}">
 			<collision>
@@ -22,9 +22,9 @@
 				<origin rpy="0 0 1.5708" />
 			</collision>
 			<inertial>
-				<mass value="12.0"/>
-				<inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0" ixz="0" iyz="0" />
-			</inertial>
+      	<mass value="0.01" />
+		    <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+				</inertial>
 			<visual>
 				<geometry>
 		      <mesh filename="package://tr2_description/meshes/stl/link_b1.stl" scale="0.001 0.001 0.001"/>
@@ -46,8 +46,8 @@
 			<origin rpy="0 0 1.5708" />
 		</collision>
 		<inertial>
-			<mass value="1.0"/>
-			<inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0" ixz="0" iyz="0" />
+      	<mass value="0.5" />
+		    <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
 		</inertial>
 		<visual>
 			<geometry>
@@ -69,8 +69,8 @@
 			<origin rpy="0 0 1.5708" />
 		</collision>
 		<inertial>
-			<mass value="1.0"/>
-			<inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0" ixz="0" iyz="0" />
+      	<mass value="0.01" />
+		    <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
 		</inertial>
 		<visual>
 			<geometry>
@@ -91,8 +91,8 @@
 			<origin rpy="0 0 1.5708" />
 		</collision>
 		<inertial>
-			<mass value="1.0"/>
-			<inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0" ixz="0" iyz="0" />
+      	<mass value="0.01" />
+		    <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
 		</inertial>
 		<visual>
 			<geometry>
@@ -130,5 +130,3 @@
 	</xacro:tr2_wheel>
 
 </robot>
-
-

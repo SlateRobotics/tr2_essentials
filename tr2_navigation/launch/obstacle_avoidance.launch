@@ -1,3 +1,0 @@
-<launch>
- <node pkg="tr2_navigation" name="tr2_obstacle_avoidance_node" type="obstacle_avoidance.py" output="screen" />
-</launch> 
