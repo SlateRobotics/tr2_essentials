@@ -15,8 +15,23 @@
 			<legacyModeNS>true</legacyModeNS>
 		</plugin>
     <material>Gazebo/LightGrey</material>
+
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+       <alwaysOn>true</alwaysOn>
+       <updateRate>20</updateRate>
+       <leftJoint>b0</leftJoint>
+       <rightJoint>b1</rightJoint>
+       <wheelSeparation>0.6038</wheelSeparation>
+       <wheelDiameter>0.200</wheelDiameter>
+       <wheelTorque>2.5</wheelTorque>
+       <!--wheelAcceleration>5</wheelAcceleration-->
+       <commandTopic>/tr2/base/diff/cmd_vel</commandTopic>
+       <odometryTopic>/tr2/base/odom</odometryTopic>
+       <odometryFrame>odom</odometryFrame>
+       <publishTf>true</publishTf>
+       <publishWheelJointState>false</publishWheelJointState>
+       <robotBaseFrame>base_link</robotBaseFrame>
+    </plugin>
 	</gazebo>
 
 </robot>
-
-

@@ -5,6 +5,8 @@ import time
 import signal
 import math
 
+from geometry_msgs.msg import Twist
+
 class avoid_obstacle:
     priority = 2
     flag_set = False
@@ -38,10 +40,11 @@ class avoid_obstacle:
 
         if self.flag_set == True and initial_flag == False:
             self.new_flag = True
-            print "new flag"
+            #print "new flag"
 
         if self.flag_set == True:
-            print "Objected within", self.min_dist, "meters"
+            pass
+            #print "Objected within", self.min_dist, "meters"
 
         return self.flag_set
 
@@ -53,7 +56,7 @@ class avoid_obstacle:
 
         x = avoid_sum[0]
         y = avoid_sum[1]
-        print x, y
+        #print x, y
 
         velocity = 0
         if self.min_dist <= 1.0:
@@ -80,7 +83,15 @@ class avoid_obstacle:
             elif (omega < 0 and self.initial_omega > 0):
                 omega = -omega
 
-        return (velocity, omega)
+        cmd_vel = Twist()
+        cmd_vel.linear.x = velocity
+        cmd_vel.linear.y = 0
+        cmd_vel.linear.z = 0
+        cmd_vel.angular.x = 0
+        cmd_vel.angular.y = 0
+        cmd_vel.angular.z = -omega
+
+        return cmd_vel
 
     def should_avoid(self, x, y, z, dist):
     	dist_max = 3.0

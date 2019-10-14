@@ -39,8 +39,7 @@
 		args="
 			/tr2/state
 			/tr2/arm/follow_joint_trajectory
-			/tr2/joints/b0/control/velocity
-			/tr2/joints/b1/control/velocity
+      /tr2/base/diff
 			/tr2/joints/g0/control/position
 			/tr2/joints/h0/control/position
 			/tr2/joints/h1/control/position
@@ -49,8 +48,7 @@
 	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
 		args="
 			/tr2/state
-			/tr2/joints/b0/control/velocity
-			/tr2/joints/b1/control/velocity
+      /tr2/base/diff
 			/tr2/joints/a0/control/position
 			/tr2/joints/a1/control/position
 			/tr2/joints/a2/control/position
@@ -64,8 +62,7 @@
 	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
 		args="
 			/tr2/state
-			/tr2/joints/b0/control/effort
-			/tr2/joints/b1/control/effort
+      /tr2/base/diff
 			/tr2/joints/a0/control/effort
 			/tr2/joints/a1/control/effort
 			/tr2/joints/a2/control/effort

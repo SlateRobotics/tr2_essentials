@@ -33,6 +33,7 @@
 	<remap from="/tr2/joints/h1/control/position/command" to="/tr2/joints/h1/control/position"/>
 
 	<!-- PARAMS + ROSPARAMS -->
+	<rosparam file="$(find tr2_gazebo)/config/gazebo_ros_control.yaml" command="load"/>
 	<param name="robot_description" command="xacro --inorder $(find tr2_description)/robots/tr2.urdf.xacro" />
 
 	<!-- INCLUDES -->

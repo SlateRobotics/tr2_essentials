@@ -5,10 +5,10 @@
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="motor19">
       <mechanicalReduction>2000</mechanicalReduction>
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
     </actuator>
     <joint name="b0">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
@@ -16,13 +16,11 @@
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="motor20">
       <mechanicalReduction>2000</mechanicalReduction>
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
     </actuator>
     <joint name="b1">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
   </transmission>
 
 </robot>
-
-

@@ -7,6 +7,8 @@ import signal
 import math
 import numpy as np
 
+from geometry_msgs.msg import Twist
+
 from .cloud_transformer import cloud_transformer
 from .routine_collision import collision
 from .routine_close_call import close_call
@@ -43,9 +45,12 @@ class TR2_Nav:
         cloud = self.transformer.transform(c)
         for r in self.routines:
             if r.flag(cloud) == True:
-                self.travelDesired = r.step()
-        self.computeVelocity()
-        return self.wheelVelocityDesired
+            	self.travelDesired = r.step()
+        #self.computeVelocity()
+        #return self.wheelVelocityDesired
+
+        #print self.travelDesired
+        return self.travelDesired
 
     def computeVelocity(self):
         velocity = self.travelDesired[0]
@@ -58,5 +63,5 @@ class TR2_Nav:
         b0_vel = velocity + (omega * wheel_width / 2)
         b1_vel = velocity - (omega * wheel_width / 2)
 
-        print b0_vel, b1_vel, velocity, omega
+        #print b0_vel, b1_vel, velocity, omega
         self.wheelVelocityDesired = (b0_vel, b1_vel)
