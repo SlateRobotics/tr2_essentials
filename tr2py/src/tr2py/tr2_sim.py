@@ -6,6 +6,7 @@ import signal
 import math
 import rospy
 from tr2_joint_sim import Joint
+from geometry_msgs.msg import Twist
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Bool
 from std_msgs.msg import UInt8
@@ -19,12 +20,14 @@ class TR2:
 	mode_backdrive = 0x11
 	mode_rotate = 0x12
 
+	base = None
+
 	def __init__(self):
 		rospy.init_node('tr2_sim', anonymous=True)
 		rospy.Subscriber("/tr2/state", JointState, self._cbtr2state)
 
-		self.b0 = Joint(self, "b0")
-		self.b1 = Joint(self, "b1")
+		self.base = rospy.Publisher("/tr2/base/diff/cmd_vel", Twist, queue_size=10);
+
 		self.a0 = Joint(self, "a0")
 		self.a1 = Joint(self, "a1")
 		self.a2 = Joint(self, "a2")
@@ -57,13 +60,12 @@ class TR2:
 
 		if self.state_change != None:
 			self.state_change(self._state)
-			
+
 	def state(self):
 		return self._state
-		
-	def drive(self, motorLeft, motorRight, motorDuration = 250):
-		self.b0.actuate(motorLeft)
-		self.b1.actuate(motorRight)
+
+	def drive(self, twist):
+		self.base.publish(twist)
 
 	def release(self):
 		self.a0.release()
@@ -73,7 +75,7 @@ class TR2:
 		self.a4.release()
 		self.h0.release()
 		self.h1.release()
-		
+
 	def stop(self):
 		self.a0.stop()
 		self.a1.stop()
@@ -82,7 +84,7 @@ class TR2:
 		self.a4.stop()
 		self.h0.stop()
 		self.h1.stop()
-		
+
 	def setMode(self, mode):
 		self.a0.setMode(mode)
 		self.a1.setMode(mode)
@@ -102,16 +104,16 @@ class TR2:
 			return getattr(self,id)
 		except:
 			pass
-    
+
 	def step(self):
 		pass
-		
+
 	def spin(self, condition = True):
 		global close
 		print "TR2 Ready"
 		while condition == True or close == True:
 			self.step()
 		self.close()
-			
+
 	def close(self):
 		pass
