@@ -150,6 +150,13 @@ class Msgs:
 		self._close = True
 
 	def step_socket(self):
+		if self._msgs != "":
+			print " -> " + self._msgs
+			self.send(self._msgs.encode())
+			self._msgs = ""
+		else:
+			self.send("nc;")
+
 		res = self.recv(4096)
 		if res and res != "ns;":
 			_states = res.split(";")
@@ -172,13 +179,6 @@ class Msgs:
 
 		if self._state_change != None:
 			self._state_change(self._state)
-
-		if self._msgs != "":
-			print " -> " + self._msgs
-			self.send(self._msgs.encode())
-			self._msgs = ""
-		else:
-			self.send("nc;")
 
 	def step(self):
 		if self._close == True:
