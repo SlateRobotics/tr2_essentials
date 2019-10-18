@@ -21,50 +21,50 @@ class Packet:
 	length = 0
 	params = []
 	checksum = 0
-	
+
 	_startByte = 0xFF
-	
+
 	def __init__(self, addr = "x0"):
 		self.address = addr
 		self.params = []
 		return
-		
+
 	def addParam(self, p):
 		self.params.append(p)
-	
+
 	def computeChecksum(self):
 		self.checksum = 0
 		self.checksum = self.checksum + self.msgId
 		self.checksum = self.checksum + self.cmd
 		self.checksum = self.checksum + self.length
-		
+
 		for p in self.params:
 			self.checksum = self.checksum + int(p)
-  		
+
 		self.checksum = int(math.floor(self.checksum % 256))
-    
+
 	def computeLength(self):
 		self.length = 4 + len(self.params)
-		
+
 	def toList(self):
 		self.computeLength()
-		
+
 		result = [self._startByte, self.address, self.msgId, self.length, self.cmd]
-		
+
 		for p in self.params:
 			result.append(p)
-		
+
 		result.append(self.checksum)
 		return result
-    
+
 	def toString(self):
 		self.computeLength()
-  	
+
 		msgString = str(self.address) + ':'
 		msgString = msgString + str(self.msgId) + ',0,'
 		msgString = msgString + str(self.length) + ','
 		msgString = msgString + str(self.cmd) + ','
-  	
+
 		for p in self.params:
 			msgString = msgString + str(p) + ','
 
@@ -87,7 +87,7 @@ class Msgs:
 
 	t_start = datetime.datetime.now()
 	t_curr = datetime.datetime.now()
-	
+
 	def __init__(self):
 		self._msgs = ""
 		self._state_change = self.on_state_change
@@ -116,7 +116,7 @@ class Msgs:
 			print(e)
 			print("Socket send failed. Reconnecting...")
 			self.connect()
-		
+
 	def recv(self, i):
 		if self._close == True:
 			return
@@ -131,7 +131,7 @@ class Msgs:
 	def on_state_change(self, state):
 		if self.state_change != None:
 			self.state_change(state)
-		
+
 	def incrementMsgId(self):
 		if (self._msgId < 255):
 			self._msgId = self._msgId + 1
@@ -140,7 +140,7 @@ class Msgs:
 
 	def state(self):
 		return self._state
-		
+
 	def add(self, packet):
 		packet.msgId = self._msgId
 		self.incrementMsgId()
@@ -150,16 +150,8 @@ class Msgs:
 		self._close = True
 
 	def step_socket(self):
-		if self._msgs != "":
-			print " -> " + self._msgs
-			self.send(self._msgs.encode())
-			self._msgs = ""
-		else:
-			self.send("nc;")
-
 		res = self.recv(4096)
 		if res and res != "ns;":
-			#print " <- " + res
 			_states = res.split(";")
 			self._state = ([], [])
 			for _state in _states:
@@ -180,7 +172,14 @@ class Msgs:
 
 		if self._state_change != None:
 			self._state_change(self._state)
-				
+
+		if self._msgs != "":
+			print " -> " + self._msgs
+			self.send(self._msgs.encode())
+			self._msgs = ""
+		else:
+			self.send("nc;")
+
 	def step(self):
 		if self._close == True:
 			return
@@ -192,4 +191,3 @@ class Msgs:
 			self.step_socket()
 			self._step_avail = True
 			self.t_start = datetime.datetime.now()
-
