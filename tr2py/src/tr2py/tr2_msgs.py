@@ -151,7 +151,7 @@ class Msgs:
 
 	def step_socket(self):
 		if self._msgs != "":
-			print " -> " + self._msgs
+			#print " -> " + self._msgs
 			self.send(self._msgs.encode())
 			self._msgs = ""
 		else:

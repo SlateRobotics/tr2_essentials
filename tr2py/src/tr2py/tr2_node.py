@@ -46,6 +46,22 @@ class TR2_Node:
 		rospy.Subscriber("/tr2/joints/g0/mode", UInt8, self.mode_g0)
 		rospy.Subscriber("/tr2/joints/h0/mode", UInt8, self.mode_h0)
 		rospy.Subscriber("/tr2/joints/h1/mode", UInt8, self.mode_h1)
+		rospy.Subscriber("/tr2/joints/a0/reset", Bool, self.reset_a0)
+		rospy.Subscriber("/tr2/joints/a1/reset", Bool, self.reset_a1)
+		rospy.Subscriber("/tr2/joints/a2/reset", Bool, self.reset_a2)
+		rospy.Subscriber("/tr2/joints/a3/reset", Bool, self.reset_a3)
+		rospy.Subscriber("/tr2/joints/a4/reset", Bool, self.reset_a4)
+		rospy.Subscriber("/tr2/joints/g0/reset", Bool, self.reset_g0)
+		rospy.Subscriber("/tr2/joints/h0/reset", Bool, self.reset_h0)
+		rospy.Subscriber("/tr2/joints/h1/reset", Bool, self.reset_h1)
+		rospy.Subscriber("/tr2/joints/a0/flip", Bool, self.flip_a0)
+		rospy.Subscriber("/tr2/joints/a1/flip", Bool, self.flip_a1)
+		rospy.Subscriber("/tr2/joints/a2/flip", Bool, self.flip_a2)
+		rospy.Subscriber("/tr2/joints/a3/flip", Bool, self.flip_a3)
+		rospy.Subscriber("/tr2/joints/a4/flip", Bool, self.flip_a4)
+		rospy.Subscriber("/tr2/joints/g0/flip", Bool, self.flip_g0)
+		rospy.Subscriber("/tr2/joints/h0/flip", Bool, self.flip_h0)
+		rospy.Subscriber("/tr2/joints/h1/flip", Bool, self.flip_h1)
 		rospy.Subscriber("/tr2/stop", Bool, self.tr2_stop)
 		rospy.Subscriber("/tr2/joints/a0/stop", Bool, self.tr2_a0_stop)
 		rospy.Subscriber("/tr2/joints/a1/stop", Bool, self.tr2_a1_stop)
@@ -162,6 +178,62 @@ class TR2_Node:
 
 	def mode_h1(self, msg):
 		self.change_mode(msg.data, self.tr2.h1)
+
+	def reset(self, b, a):
+		if b == True:
+			a.resetEncoderPosition()
+
+	def reset_a0(self, msg):
+		self.reset(bool(msg.data), self.tr2.a0)
+
+	def reset_a1(self, msg):
+		self.reset(bool(msg.data), self.tr2.a1)
+
+	def reset_a2(self, msg):
+		self.reset(bool(msg.data), self.tr2.a2)
+
+	def reset_a3(self, msg):
+		self.reset(bool(msg.data), self.tr2.a3)
+
+	def reset_a4(self, msg):
+		self.reset(bool(msg.data), self.tr2.a4)
+
+	def reset_g0(self, msg):
+		self.reset(bool(msg.data), self.tr2.g0)
+
+	def reset_h0(self, msg):
+		self.reset(bool(msg.data), self.tr2.h0)
+
+	def reset_h1(self, msg):
+		self.reset(bool(msg.data), self.tr2.h1)
+
+	def flip(self, b, a):
+		if b == True:
+			a.flipMotor()
+
+	def flip_a0(self, msg):
+		self.flip(bool(msg.data), self.tr2.a0)
+
+	def flip_a1(self, msg):
+		self.flip(bool(msg.data), self.tr2.a1)
+
+	def flip_a2(self, msg):
+		self.flip(bool(msg.data), self.tr2.a2)
+
+	def flip_a3(self, msg):
+		self.flip(bool(msg.data), self.tr2.a3)
+
+	def flip_a4(self, msg):
+		self.flip(bool(msg.data), self.tr2.a4)
+
+	def flip_g0(self, msg):
+		self.flip(bool(msg.data), self.tr2.g0)
+
+	def flip_h0(self, msg):
+		self.flip(bool(msg.data), self.tr2.h0)
+
+	def flip_h1(self, msg):
+		self.flip(bool(msg.data), self.tr2.h1)
 
 	def tr2_stop(self, msg):
 		self.stop(msg.data)

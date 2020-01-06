@@ -10,6 +10,7 @@ CMD_ROTATE = 0x13
 CMD_RETURN_STATUS = 0x14
 CMD_STOP_RELEASE = 0x15
 CMD_STOP_EMERGENCY = 0x16
+CMD_FLIP_MOTOR = 0x17
 
 class Joint:
 	_tr2 = None
@@ -69,6 +70,14 @@ class Joint:
 		
 		self._tr2._msgs.add(packet)
 		self._tr2.step()
+
+        def flipMotor(self):
+            packet = tr2_msgs.Packet()
+            packet.address = self._id
+            packet.cmd = CMD_FLIP_MOTOR
+            
+            self._tr2._msgs.add(packet)
+            self._tr2.step()
 	
 	def resetEncoderPosition(self):
 		packet = tr2_msgs.Packet()
